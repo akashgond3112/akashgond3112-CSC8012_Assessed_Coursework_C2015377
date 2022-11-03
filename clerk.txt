@@ -1,0 +1,9 @@
+Bowling -> 6
+Cycling -> 6
+Football -> 6
+Hiking -> 6
+Sailing -> 6
+Table Tennis -> 6
+Jones -> Ted
+Smith -> Anna
+Smith -> Michael
