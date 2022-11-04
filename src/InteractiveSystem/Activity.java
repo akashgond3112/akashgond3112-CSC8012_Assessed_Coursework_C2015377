@@ -38,7 +38,6 @@ public class Activity implements Comparable<Activity> {
         this.activityName = activityName;
     }
 
-
     @Override
     public int compareTo(Activity activity) {
         return activityName.compareTo(activity.activityName);
@@ -49,7 +48,4 @@ public class Activity implements Comparable<Activity> {
         System.out.println(activityName);
     }
 
-    public void decrementTotalNumberOfTicketAvailablePerActivity(){
-        this.totalNumberOfTicketAvailablePerActivity--;
-    }
 }

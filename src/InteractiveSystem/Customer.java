@@ -72,44 +72,4 @@ public class Customer implements Comparable<Customer>{
         else return 1;
     }
 
-    /**
-     * When user purchase the ticket for the first time or purchasing the another ticket for the same activity
-     * @param activity which activity user want to buy the ticket
-     * @param numOfTicketBuying number of ticket buying
-     * @return if successfully purchased the ticket
-     */
-    public boolean buyTicket(Activity activity, int numOfTicketBuying){
-        if(numberOfTicketBoughtEachActivity.get(activity) ==null){
-            numberOfTicketBoughtEachActivity.put(activity,numOfTicketBuying);
-            this.totalNumberOfActivityRegistered++;
-            return true;
-
-        }else if(numberOfTicketBoughtEachActivity.get(activity) !=null ){
-            int oldValue= numberOfTicketBoughtEachActivity.get(activity);
-            numberOfTicketBoughtEachActivity.put(activity,oldValue++);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * When user cancel the ticket for the provided activity,
-     * First check if total no. ticket bought is greater than 1 ,in this case just decrement the value of numberOfTicketBoughtEachActivity
-     * But, if numberOfTicketBoughtEachActivity was 1 , in this case set the value to 0 and also
-     * set the value for totalNumberOfActivityRegistered to 0.
-     * @param activity which activity user want to cancel the ticket
-     * @param numOfTicketBuying number of ticket cancelling
-     * @return if successfully purchased the ticket
-     */
-    public boolean cancelTicket(Activity activity, int numOfTicketBuying){
-        int oldValue= numberOfTicketBoughtEachActivity.get(activity);
-        if(oldValue > 1){
-            numberOfTicketBoughtEachActivity.put(activity,oldValue--);
-            return true;
-        } else if (oldValue ==1) {
-            numberOfTicketBoughtEachActivity.put(activity,oldValue--);
-            this.totalNumberOfActivityRegistered--;
-        }
-        return false;
-    }
 }
