@@ -1,8 +1,5 @@
 package InteractiveSystem;
 
-import Exceptions.ActivityBookingException;
-import GymMembership.Person;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -15,10 +12,9 @@ public class MainProgram {
     public static int tempTotalNumberOfPerson = 0;
     public static int tempTotalNumberOfActivity = 0;
     public static Scanner k = new Scanner(System.in);
-    public static ArrayList<Customer> customerArrayList = new ArrayList<>();
-    public static ArrayList<Activity> activityArrayList = new ArrayList<>();
-    public static HashMap<String, Activity> activityMap = new HashMap<>();
-    public static SortedArrayList<Customer> sortedArrayList = new SortedArrayList<>();
+    public static ArrayList<Customer> customerArrayList = new ArrayList<>(); // list of all register customer objects
+    public static ArrayList<Activity> activityArrayList = new ArrayList<>(); // list of all register activity objects
+    public static HashMap<String, Activity> activityMap = new HashMap<>();   // Map of activity where key is the name of the activity and value is the activity object
 
     public static void main(String[] args)  {
         PrintWriter clerk = null;
@@ -30,8 +26,8 @@ public class MainProgram {
             fileNotFoundException.printStackTrace();
         }
 
-        readFileInput();
-        printUserMenu();
+        readFileInput(); // read input file when the main program starts
+        printUserMenu(); // Initialize user menu with user menu
 
         char userInput = k.next().charAt(0);
         k.nextLine();
@@ -57,6 +53,9 @@ public class MainProgram {
 
     }
 
+    /**
+     * Method that prints the user menu
+     */
     private static void printUserMenu() {
         System.out.println("------------------------------");
         System.out.println("MENU");
@@ -137,8 +136,12 @@ public class MainProgram {
         }
     }
 
+    /**
+     * @param clerk to print the customer input/output details in the clerk.txt file
+     */
     private static void printActivitySortedName(PrintWriter clerk) {
         SortedArrayList<Activity> expectedArrayList = new SortedArrayList<>();
+        SortedArrayList<Activity> sortedArrayList = new SortedArrayList<>(); // Created an object for sorted array class
 
         activityMap.forEach((key, value) -> {
             activityArrayList.add(value);
@@ -153,8 +156,13 @@ public class MainProgram {
         });
     }
 
+    /**
+     * @param clerk to print the customer input/output details in the clerk.txt file
+     */
     private static void printCustomerNameInSortedOrder(PrintWriter clerk) {
         SortedArrayList<Customer> expectedArrayList = new SortedArrayList<>();
+        SortedArrayList<Customer> sortedArrayList = new SortedArrayList<>();
+
         customerArrayList.forEach(customer -> {
             sortedArrayList.insert(expectedArrayList, customer);
         });
@@ -163,6 +171,23 @@ public class MainProgram {
         });
     }
 
+    /**
+     * @param customer customer object
+     * @param activity activity object
+     * @param clerk to print the customer input/output details in the clerk.txt file
+     * @param letters to print the customer letter in the letters.txt file
+     * @param isBuying boolean flag indicating whether the customer is buying the  ticket or canceling the ticket
+     * @return return the customer if its successfully purchased or canceled the ticket
+     * There are several checks in this method in order to either buy And Cancel the Ticket
+     * 1. If the customer is already  registered or not ?
+     * 2. If the activity is in the  list of activities or not ?
+     * 3. If ticket is available for the provided activity or not ?
+     * 4. Customer can only register for the total number of activities provided
+     * 5. If the customer is canceling the ticket check if the customer is already purchase the ticket or not
+     * 6. Also update the customer and activity details accordingly whenever customer is buying or cancel the ticket .
+     * e.g. The no. of ticket left out of the no. of tickets available.
+     *     The total number of tickets purchased but the ticket for each activity.
+     */
     public static boolean buyAndCancelTicket(Customer customer, Activity activity, PrintWriter clerk,PrintWriter letters, boolean isBuying){
 
         Customer existingCustomer = checkIfCustomerExist(customer);
@@ -221,6 +246,10 @@ public class MainProgram {
         return isBuying;
     }
 
+    /**
+     * @return Customer object
+     * Take the input from the user and return the customer object
+     */
     private static Customer readCustomerNames() {
         System.out.println("Enter person’s first name and last name,"
                 + " and press Enter");
@@ -230,7 +259,10 @@ public class MainProgram {
         return new Customer(firstName, lastName);
     }
 
-
+    /**
+     * @return Activity object
+     * Take the input from the user and return the activity object
+     */
     private static Activity readActivityDetails() {
         System.out.println("Enter Activity name you want to get registered.");
         String activityName = k.next();
@@ -238,14 +270,22 @@ public class MainProgram {
         return new Activity(activityName);
     }
 
+    /**
+     * @param activity object as input from the user
+     * @return activity object
+     * Check if the activity existing or not ,return null if not in the list
+     */
     private static Activity checkIfActivityExist(Activity activity) {
-
         for (String key : activityMap.keySet())
             if (key.equalsIgnoreCase(activity.getActivityName())) return activityMap.get(key);
-
         return null;
     }
 
+    /**
+     * @param customer object as input from the user
+     * @return customer object
+     * Check if the customer exists or not ,return null if not in the list
+     */
     private static Customer checkIfCustomerExist(Customer customer) {
 
         for (Customer cust : customerArrayList) {
@@ -257,22 +297,38 @@ public class MainProgram {
         return null;
     }
 
+    /**
+     * @param activity object as input
+     * @return boolean
+     * Check if the ticket is available or not ,return false if not available
+     */
     public static boolean checkIfTicketIsAvailableForTheProvidedActivity(Activity activity) {
         int numberOfTicketAvailable = activityMap.get(activity.getActivityName()).getTotalNumberOfTicketAvailablePerActivity();
         return numberOfTicketAvailable > 0;
     }
 
+    /**
+     * @param customer  object as input
+     * @param activity  object as input
+     * @return boolean
+     * Check if the customer has already purchased the ticket for the provided activity
+     */
     public static boolean checkIfCustomerHaveAssignedTicketForTheProvidedActivity(Customer customer, Activity activity){
             return customer.getNumberOfTicketBoughtEachActivity().get(activity) > 0 ;
     }
 
-    public static void printLetter(PrintWriter letter, Customer customer, Activity activity)
-    {
+    /**
+     * @param letter  to print the customer letter in the  letter.txt file
+     * @param customer  object as input
+     * @param activity object as input
+     * This method will print the customer a letter which is being called when there is no ticket is available
+     */
+    public static void printLetter(PrintWriter letter, Customer customer, Activity activity) {
         letter.print("Dear ");
         letter.print(customer.getFirstName());
         letter.println(",");
         letter.println("There is no more ticket available for the activity " + activity.getActivityName() + ", Please try for another activity.");
-        letter.print("Thank you ");
+        letter.println("Thank you ");
     }
 
     /**
