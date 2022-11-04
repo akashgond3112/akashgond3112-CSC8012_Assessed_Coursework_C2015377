@@ -5,28 +5,21 @@ import java.util.HashMap;
 
 public class Activity implements Comparable<Activity> {
 
-    private int totalNumberOfActivity;
     private int totalNumberOfTicketAvailablePerActivity;
     private String activityName;
 
     Activity() {
         this.activityName = "";
-        this.totalNumberOfActivity = 0;
         this.totalNumberOfTicketAvailablePerActivity = 0;
     }
 
-    Activity(int totalNumberOfActivity, int totalNumberOfTicketAvailablePerActivity, String activityName) {
-        this.totalNumberOfTicketAvailablePerActivity = totalNumberOfTicketAvailablePerActivity;
-        this.totalNumberOfActivity = totalNumberOfActivity;
+    Activity(String activityName) {
         this.activityName = activityName;
     }
 
-    public int getTotalNumberOfActivity() {
-        return totalNumberOfActivity;
-    }
-
-    public void setTotalNumberOfActivity(int totalNumberOfActivity) {
-        this.totalNumberOfActivity = totalNumberOfActivity;
+    Activity(String activityName,int totalNumberOfTicketAvailablePerActivity) {
+        this.activityName = activityName;
+        this.totalNumberOfTicketAvailablePerActivity = totalNumberOfTicketAvailablePerActivity;
     }
 
     public int getTotalNumberOfTicketAvailablePerActivity() {
@@ -52,7 +45,11 @@ public class Activity implements Comparable<Activity> {
     }
 
     public void printName(PrintWriter f) {
-        f.println(activityName + " -> " + totalNumberOfActivity);
-        System.out.println(activityName + " -> " + totalNumberOfActivity);
+        f.println(activityName);
+        System.out.println(activityName);
+    }
+
+    public void decrementTotalNumberOfTicketAvailablePerActivity(){
+        this.totalNumberOfTicketAvailablePerActivity--;
     }
 }

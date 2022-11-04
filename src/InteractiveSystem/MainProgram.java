@@ -14,10 +14,8 @@ public class MainProgram {
     public static Scanner k = new Scanner(System.in);
     public static ArrayList<Customer> customerArrayList = new ArrayList<>();
     public static ArrayList<Activity> activityArrayList = new ArrayList<>();
-    public static HashMap<String, Integer> activityMap = new HashMap<>();
+    public static HashMap<String, Activity> activityMap = new HashMap<>();
     public static SortedArrayList<Customer> sortedArrayList = new SortedArrayList<>();
-
-
 
     public static void main(String[] args) throws FileNotFoundException {
         PrintWriter clerk = new PrintWriter("clerk.txt");
@@ -30,28 +28,11 @@ public class MainProgram {
         k.nextLine();
         while (userInput != 'f') {
             if (userInput == 'a') {
-                SortedArrayList<Activity> expectedArrayList = new SortedArrayList<>();
-
-                activityMap.forEach((values,keys) -> {
-                     activityArrayList.add(new Activity(tempTotalNumberOfActivity, keys,values));
-                });
-
-                activityArrayList.forEach(activity -> {
-                    sortedArrayList.insert(expectedArrayList, activity);
-                });
-
-                expectedArrayList.forEach(activity -> {
-                    activity.printName(clerk);
-                });
-
+                printActivitySortedName(clerk);
             } else if (userInput == 'c') {
-                SortedArrayList<Customer> expectedArrayList = new SortedArrayList<>();
-                customerArrayList.forEach(customer -> {
-                    sortedArrayList.insert(expectedArrayList, customer);
-                });
-                expectedArrayList.forEach(customer -> {
-                    customer.printName(clerk);
-                });
+                printCustomerNameInSortedOrder(clerk);
+            } else if (userInput == 't') {
+                buyTicket(readCustomerNames(), readActivityDetails(), clerk);
             } else {
                 System.out.println("Invalid entry, try again");
             }
@@ -117,16 +98,16 @@ public class MainProgram {
                         activityMap.put(data, null);                         // Initially keep the value of the key as null always
                         System.out.println("key -> " + data);
                     } else if (activityMap.get(tempKey) == null) {           // If isString is false and value is null for the previous key which we stored in the tmp variable
-                        System.out.println("value for key -> "+ tempKey+ " is -> "+data);
-                        activityMap.put(tempKey, Integer.parseInt(data));    // We will add the value i.e total number of tickets for the activity in the map
+                        System.out.println("value for key -> " + tempKey + " is -> " + data);
+                        activityMap.put(tempKey, new Activity(tempKey, Integer.parseInt(data)));    // We will add the value i.e total number of tickets for the activity in the map
                     }
-                } else if (activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) ==null) { // This condition check is always for the last value i.e total number of tickets for the activity
-                    System.out.println("value for the last key -> "+ tempKey+ " is -> "+data);
-                    activityMap.put(tempKey, Integer.parseInt(data));        // Add the value to the last activity
-                } else if(!isString && activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) !=null){ // This condition check is always for setting the total number of person
+                } else if (activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) == null) { // This condition check is always for the last value i.e total number of tickets for the activity
+                    System.out.println("value for the last key -> " + tempKey + " is -> " + data);
+                    activityMap.put(tempKey, new Activity(tempKey, Integer.parseInt(data)));        // Add the value to the last activity
+                } else if (!isString && activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) != null) { // This condition check is always for setting the total number of person
                     tempTotalNumberOfPerson = Integer.parseInt(data);
-                    System.out.println("tempTotalNumberOfPerson -> "+ tempTotalNumberOfPerson);
-                } else if(customerArrayList.size() <= tempTotalNumberOfPerson && tempTotalNumberOfPerson >0){ // This conditions satisfies only when we have the details about total number of person
+                    System.out.println("tempTotalNumberOfPerson -> " + tempTotalNumberOfPerson);
+                } else if (customerArrayList.size() <= tempTotalNumberOfPerson && tempTotalNumberOfPerson > 0) { // This conditions satisfies only when we have the details about total number of person
                     String[] firstNameLastName = data.split(" ");                                       // and the customer list size is less than total number of person
                     if (firstNameLastName.length > 1) {                                                        // Check if we have both first and last name else show message
                         customerArrayList.add(new Customer(firstNameLastName[0], firstNameLastName[1]));
@@ -134,7 +115,7 @@ public class MainProgram {
                         System.out.println("Customer either don't have first name or last name , Please check your input file!" + data);
                     }
                 }
-                isString=false;
+                isString = false;
 
                 counter++;
             }
@@ -144,16 +125,153 @@ public class MainProgram {
         }
     }
 
-    public void addActivityDetailsToTheMap(String activityName, int totalNumberOfTicketAvailablePerActivity) {
-        activityMap.put(activityName, totalNumberOfTicketAvailablePerActivity);
+    private static void printActivitySortedName(PrintWriter clerk) {
+        SortedArrayList<Activity> expectedArrayList = new SortedArrayList<>();
+
+        activityMap.forEach((key, value) -> {
+            activityArrayList.add(value);
+        });
+
+        activityArrayList.forEach(activity -> {
+            sortedArrayList.insert(expectedArrayList, activity);
+        });
+
+        expectedArrayList.forEach(activity -> {
+            activity.printName(clerk);
+        });
     }
 
-    public boolean checkIfTicketIsAvailableForTheProvidedActivity(String activityName) {
+    private static void printCustomerNameInSortedOrder(PrintWriter clerk) {
+        SortedArrayList<Customer> expectedArrayList = new SortedArrayList<>();
+        customerArrayList.forEach(customer -> {
+            sortedArrayList.insert(expectedArrayList, customer);
+        });
+        expectedArrayList.forEach(customer -> {
+            customer.printName(clerk);
+        });
+    }
 
-        for (String key : activityMap.keySet()) {
+    public static boolean buyTicket(Customer customer, Activity activity, PrintWriter clerk) {
 
-            return key.equals(activityName) && activityMap.get(activityName) <= 0;
+        Customer existingCustomer = checkIfCustomerExist(customer);
+        Activity existingActivity = checkIfActivityExist(activity);
+
+        // first check if customer exist or not
+        if (existingCustomer == null) {
+            System.out.println("Hi " + customer.getLastName() + ", Sorry, But we cannot find you as an registered customer.");
+            clerk.println("Hi " + customer.getLastName() + ", Sorry, But we cannot find you as an registered customer.");
+            return false;
         }
+
+        // check if Activity is available
+        if (existingActivity == null) {
+            System.out.println("The provided activity : " + activity.getActivityName() + " doesn't exist, Please try entering the correct activity from the below list.");
+            clerk.println("The provided activity : " + activity.getActivityName() + " doesn't exist, Please try entering the correct activity from the below list.");
+            printActivitySortedName(clerk);
+            return false;
+        }
+
+        // check if ticket is available for the activity
+        if (!checkIfTicketIsAvailableForTheProvidedActivity(existingActivity)) {
+            System.out.println("There is no more ticket available for the activity " + existingActivity.getActivityName() + ", Please try for another activity.");
+            clerk.println("There is no more ticket available for the activity " + existingActivity.getActivityName() + ", Please try for another activity.");
+            return false;
+        }
+
+        // if customer is already registered for 3 activities
+        if (existingCustomer.getTotalNumberOfActivityRegistered() == 3) {
+            System.out.println("Hi " + existingCustomer.getLastName() + " you have been already registered for this activity " + existingActivity.getActivityName() + ".");
+            clerk.println("Hi " + existingCustomer.getLastName() + " you have been already registered for this activity " + existingActivity.getActivityName() + ".");
+            return false;
+        }
+
+        if (existingCustomer.buyTicket(existingActivity, 1)) {
+            existingActivity.setTotalNumberOfTicketAvailablePerActivity(existingActivity.getTotalNumberOfTicketAvailablePerActivity() - 1);
+            System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the ticket the no.of ticket "+1+" for the activity " + existingActivity.getActivityName() + ".");
+            clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the ticket the no.of ticket "+1+" for the activity " + existingActivity.getActivityName() + ".");
+        }
+
         return false;
+    }
+
+    public static boolean cancelTicket(Customer customer, Activity activity, PrintWriter clerk) {
+
+        Customer existingCustomer = checkIfCustomerExist(customer);
+        Activity existingActivity = checkIfActivityExist(activity);
+
+        // first check if customer exist or not
+        if (existingCustomer == null) {
+            System.out.println("Hi " + customer.getLastName() + ", Sorry, But we cannot find you as an registered customer.");
+            clerk.println("Hi " + customer.getLastName() + ", Sorry, But we cannot find you as an registered customer.");
+            return false;
+        }
+
+        // check if Activity is available
+        if (existingActivity == null) {
+            System.out.println("The provided activity : " + activity.getActivityName() + " doesn't exist, Please try entering the correct activity from the below list.");
+            clerk.println("The provided activity : " + activity.getActivityName() + " doesn't exist, Please try entering the correct activity from the below list.");
+            printActivitySortedName(clerk);
+            return false;
+        }
+
+        // check if Customer has purchased any ticket in the past for the provided activity
+        if (!checkIfCustomerHaveAssignedTicketForTheProvidedActivity(existingCustomer,existingActivity)) {
+            System.out.println("There is no ticket found for the activity " + existingActivity.getActivityName() + ", Please try to cancel the ticket for another activity.");
+            clerk.println("There is no ticket found for the activity " + existingActivity.getActivityName() + ", Please try to cancel the ticket for another activity.");
+            return false;
+        }
+
+        if (existingCustomer.cancelTicket(existingActivity, 1)) {
+            existingActivity.setTotalNumberOfTicketAvailablePerActivity(existingActivity.getTotalNumberOfTicketAvailablePerActivity() + 1);
+            System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully canceled the ticket the no.of ticket "+1+" for the activity " + existingActivity.getActivityName() + ".");
+            clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully canceled the ticket the no.of ticket "+1+" for the activity " + existingActivity.getActivityName() + ".");
+        }
+
+        return false;
+    }
+
+    private static Customer readCustomerNames() {
+        System.out.println("Enter person’s first name and last name,"
+                + " and press Enter");
+        String firstName = k.next();
+        String lastName = k.next();
+        k.nextLine();
+        return new Customer(firstName, lastName);
+    }
+
+
+    private static Activity readActivityDetails() {
+        System.out.println("Enter Activity name you want to get registered.");
+        String activityName = k.next();
+        k.nextLine();
+        return new Activity(activityName);
+    }
+
+    private static Activity checkIfActivityExist(Activity activity) {
+
+        for (String key : activityMap.keySet())
+            if (key.equalsIgnoreCase(activity.getActivityName())) return activityMap.get(key);
+
+        return null;
+    }
+
+    private static Customer checkIfCustomerExist(Customer customer) {
+
+        for (Customer cust : customerArrayList) {
+            if (cust.getFirstName().equalsIgnoreCase(customer.getFirstName()) &&
+                    cust.getLastName().equalsIgnoreCase(customer.getLastName())) {
+                return cust;
+            }
+        }
+        return null;
+    }
+
+    public static boolean checkIfTicketIsAvailableForTheProvidedActivity(Activity activity) {
+        int numberOfTicketAvailable = activityMap.get(activity.getActivityName()).getTotalNumberOfTicketAvailablePerActivity();
+        return numberOfTicketAvailable > 0;
+    }
+
+    public static boolean checkIfCustomerHaveAssignedTicketForTheProvidedActivity(Customer customer, Activity activity){
+            return customer.getNumberOfTicketBoughtEachActivity().get(activity) > 0 ;
     }
 }
