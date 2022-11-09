@@ -140,12 +140,23 @@ public class MainProgram {
      * @param clerk to print the customer input/output details in the clerk.txt file
      */
     private static void printActivitySortedName(PrintWriter clerk) {
-        SortedArrayList<Activity> expectedArrayList = new SortedArrayList<>();
         SortedArrayList<Activity> sortedArrayList = new SortedArrayList<>(); // Created an object for sorted array class
 
+        SortedArrayList<Activity> expectedArrayList = new SortedArrayList<>();
+
+        // create an array list of activity objects
         activityMap.forEach((key, value) -> {
             activityArrayList.add(value);
         });
+
+        //Loop through the activity list and  call the insert method from the sortedArrayList class
+        // here we need to send the activity objects one by one and also an empty arraylist of <activity> initially
+        // insert method in the sortedArrayList class search for the activity object in the provided arrayList i.e expectedArrayList
+        // When the first activity is sent it will get added to the sortedArrayList and returned
+        // to,In, the next loop we will search for the activity in the sortedArrayList by binary search technique
+        // By getting the mid-value and compare the object by calling the compare to method based on that we will return the position i.e index
+        // once we get the index , we will call the move method from the sortedArrayList class to change the position of the list element
+        //  after that we will the object in the sortedArrayList
 
         activityArrayList.forEach(activity -> {
             sortedArrayList.insert(expectedArrayList, activity);

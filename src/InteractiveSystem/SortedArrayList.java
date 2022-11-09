@@ -11,64 +11,81 @@ the ArrayList<E> class that can modify the list.
 * */
 @SuppressWarnings("unchecked")
 public class SortedArrayList<E> extends ArrayList<E>{
-    private static <E> int binarySearch(ListIterator<E> i, E key){
+    private static <E> int binarySearch(ListIterator<E> listIterator, E key){
         int low = 0;
-        int high= i.previousIndex();
+        int high= listIterator.previousIndex();
         while (low <= high) {
             int mid = (low + high) >>> 1;
-            Comparable<E> midVal = (Comparable<E>) get(i, mid);
-            int cmp = midVal.compareTo(key);
+            Comparable<E> midValue = (Comparable<E>) get(listIterator, mid);
+            int comparator = midValue.compareTo(key);
 
-            if (cmp < 0)
+            if (comparator < 0)
                 low = mid + 1;
-            else if (cmp > 0)
+            else if (comparator > 0)
                 high = mid - 1;
             else
                 return mid;
         }
+        //  When the list is empty we return the first element index of the list which will be always -1
         return -(low + 1);  // key not found
     }
 
     private static <E> E get(ListIterator<E> i, int index) {
-        E obj = null;
-        int pos = i.nextIndex();
-        if (pos <= index) {
+        E objectE = null;
+        int position = i.nextIndex();
+        if (position <= index) {
             do {
-                obj = i.next();
-            } while (pos++ < index);
+                objectE = i.next();
+            } while (position++ < index);
         } else {
             do {
-                obj = i.previous();
-            } while (--pos > index);
+                objectE = i.previous();
+            } while (--position > index);
         }
-        return obj;
+        return objectE;
     }
 
     private static void move(ListIterator<?> i, int index) {
-        int pos = i.nextIndex();
-        if (pos==index)
+        int position = i.nextIndex();
+        if (position==index)
             return;
 
-        if (pos < index) {
+        if (position < index) {
             do {
                 i.next();
-            } while (++pos < index);
+            } while (++position < index);
         }
         else {
             do {
                 i.previous();
-            } while (--pos > index);
+            } while (--position > index);
         }
     }
 
-    <E> void insert(List<E> list, E key){
-        ListIterator<E> i= list.listIterator(list.size());
-        int idx = binarySearch(i, key);
-        if (idx<0){
-            idx=~idx;
+
+    /**
+     * @param sortedArrayList
+     * @param key
+     * @param <E>
+     *  Loop through the activity sortedArrayList and  call the insert method from the sortedArrayList class
+     *  here we need to send the activity objects one by one and also an empty arraylist of <activity> initially
+     *  insert method in the sortedArrayList class search for the activity object in the provided arrayList i.e expectedArrayList
+     *  When the first activity is sent it will get added to the sortedArrayList and returned
+     *  to,In, the next loop we will search for the activity in the sortedArrayList by binary search technique
+     *  By getting the mid-value and compare the object by calling the compare to method based on that we will return the position i.e index
+     *  once we get the index , we will call the move method from the sortedArrayList class to change the position of the sortedArrayList element
+     *  after that we will the object in the provided sortedArrayList
+     */
+    <E> void insert(List<E> sortedArrayList, E key){
+        ListIterator<E> listIterator= sortedArrayList.listIterator(sortedArrayList.size());
+        int index = binarySearch(listIterator, key);
+        if (index<0){
+            index=~index;
         }
-        move(i, idx);
-        ((ListIterator<E>)i).add(key);
-        i.nextIndex();
+        move(listIterator, index);
+        ((ListIterator<E>)listIterator).add(key);
+        listIterator.nextIndex();
     }
+
+
 }
