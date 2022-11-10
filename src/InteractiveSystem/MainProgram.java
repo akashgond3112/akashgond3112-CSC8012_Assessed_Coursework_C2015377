@@ -12,8 +12,8 @@ public class MainProgram {
     public static int tempTotalNumberOfPerson = 0;
     public static int tempTotalNumberOfActivity = 0;
     public static Scanner k = new Scanner(System.in);
-    public static ArrayList<Customer> customerArrayList = new ArrayList<>(); // list of all register customer objects
-    public static ArrayList<Activity> activityArrayList = new ArrayList<>(); // list of all register activity objects
+    static SortedArrayList<Customer> customersSortedArrayList = new SortedArrayList<>(); // Initialize sorted  customer arrayList initially empty.
+    static SortedArrayList<Activity> activitySortedArrayList = new SortedArrayList<>(); // Initialize sorted activity arrayList initially empty.
     public static HashMap<String, Activity> activityMap = new HashMap<>();   // Map of activity where key is the name of the activity and value is the activity object
 
     public static void main(String[] args)  {
@@ -74,8 +74,8 @@ public class MainProgram {
      * : @integer or @string
      * We have considered that the first entry in the file, if data is empty we will break the loop else it will be considered as the
      * :@totalNumberOfActivity which will be always be the first entry.
-     * We will store the information about the activities in a map with key,value pair,where the key -> Activity Name and value -> Number of tickets
-     * We will store the information about the customer in the customer list .
+     * We will store the information about the activities in a sorted activity list
+     * We will store the information about the customer in a sorted customer list .
      */
     private static void readFileInput() {
 
@@ -111,17 +111,19 @@ public class MainProgram {
                     } else if (activityMap.get(tempKey) == null) {           // If isString is false and value is null for the previous key which we stored in the tmp variable
                         System.out.println("value for key -> " + tempKey + " is -> " + data);
                         activityMap.put(tempKey, new Activity(tempKey, Integer.parseInt(data)));    // We will add the value i.e total number of tickets for the activity in the map
+                        activitySortedArrayList.insert(activitySortedArrayList, new Activity(tempKey, Integer.parseInt(data)));
                     }
                 } else if (activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) == null) { // This condition check is always for the last value i.e total number of tickets for the activity
                     System.out.println("value for the last key -> " + tempKey + " is -> " + data);
                     activityMap.put(tempKey, new Activity(tempKey, Integer.parseInt(data)));        // Add the value to the last activity
+                    activitySortedArrayList.insert(activitySortedArrayList, new Activity(tempKey, Integer.parseInt(data)));
                 } else if (!isString && activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) != null) { // This condition check is always for setting the total number of person
                     tempTotalNumberOfPerson = Integer.parseInt(data);
                     System.out.println("tempTotalNumberOfPerson -> " + tempTotalNumberOfPerson);
-                } else if (customerArrayList.size() <= tempTotalNumberOfPerson && tempTotalNumberOfPerson > 0) { // This conditions satisfies only when we have the details about total number of person
+                } else if (customersSortedArrayList.size() <= tempTotalNumberOfPerson && tempTotalNumberOfPerson > 0) { // This conditions satisfies only when we have the details about total number of person
                     String[] firstNameLastName = data.split(" ");                                       // and the customer list size is less than total number of person
-                    if (firstNameLastName.length > 1) {                                                        // Check if we have both first and last name else show message
-                        customerArrayList.add(new Customer(firstNameLastName[0], firstNameLastName[1]));
+                    if (firstNameLastName.length > 1) {
+                        customersSortedArrayList.insert(customersSortedArrayList, new Customer(firstNameLastName[0], firstNameLastName[1]));// Check if we have both first and last name else show message
                     } else {
                         System.out.println("Customer either don't have first name or last name , Please check your input file!" + data);
                     }
@@ -140,29 +142,7 @@ public class MainProgram {
      * @param clerk to print the customer input/output details in the clerk.txt file
      */
     private static void printActivitySortedName(PrintWriter clerk) {
-        SortedArrayList<Activity> sortedArrayList = new SortedArrayList<>(); // Created an object for sorted array class
-
-        SortedArrayList<Activity> expectedArrayList = new SortedArrayList<>();
-
-        // create an array list of activity objects
-        activityMap.forEach((key, value) -> {
-            activityArrayList.add(value);
-        });
-
-        //Loop through the activity list and  call the insert method from the sortedArrayList class
-        // here we need to send the activity objects one by one and also an empty arraylist of <activity> initially
-        // insert method in the sortedArrayList class search for the activity object in the provided arrayList i.e expectedArrayList
-        // When the first activity is sent it will get added to the sortedArrayList and returned
-        // to,In, the next loop we will search for the activity in the sortedArrayList by binary search technique
-        // By getting the mid-value and compare the object by calling the compare to method based on that we will return the position i.e index
-        // once we get the index , we will call the move method from the sortedArrayList class to change the position of the list element
-        //  after that we will the object in the sortedArrayList
-
-        activityArrayList.forEach(activity -> {
-            sortedArrayList.insert(expectedArrayList, activity);
-        });
-
-        expectedArrayList.forEach(activity -> {
+        activitySortedArrayList.forEach(activity -> {
             activity.printName(clerk);
         });
     }
@@ -171,13 +151,7 @@ public class MainProgram {
      * @param clerk to print the customer input/output details in the clerk.txt file
      */
     private static void printCustomerNameInSortedOrder(PrintWriter clerk) {
-        SortedArrayList<Customer> expectedArrayList = new SortedArrayList<>();
-        SortedArrayList<Customer> sortedArrayList = new SortedArrayList<>();
-
-        customerArrayList.forEach(customer -> {
-            sortedArrayList.insert(expectedArrayList, customer);
-        });
-        expectedArrayList.forEach(customer -> {
+        customersSortedArrayList.forEach(customer -> {
             customer.printName(clerk);
         });
     }
@@ -299,7 +273,7 @@ public class MainProgram {
      */
     private static Customer checkIfCustomerExist(Customer customer) {
 
-        for (Customer cust : customerArrayList) {
+        for (Customer cust : customersSortedArrayList) {
             if (cust.getFirstName().equalsIgnoreCase(customer.getFirstName()) &&
                     cust.getLastName().equalsIgnoreCase(customer.getLastName())) {
                 return cust;
