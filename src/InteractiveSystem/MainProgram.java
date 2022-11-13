@@ -1,19 +1,19 @@
 package InteractiveSystem;
 
+import Exceptions.ActivityException;
 import Exceptions.CustomerException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class MainProgram {
 
+    final static int NUMBER_OF_ALLOWED_REGISTRATION=3;
     public static int tempTotalNumberOfPerson = 0;
     public static int tempTotalNumberOfActivity = 0;
     public static Scanner k = new Scanner(System.in);
-    public static HashMap<String, Activity> activityMap = new HashMap<>();   // Map of activity where key is the name of the activity and value is the activity object
     static SortedArrayList<Customer> customersSortedArrayList = new SortedArrayList<>(); // Initialize sorted  customer arrayList initially empty.
     static SortedArrayList<Activity> activitySortedArrayList = new SortedArrayList<>(); // Initialize sorted activity arrayList initially empty.
 
@@ -78,7 +78,7 @@ public class MainProgram {
      * We will store the information about the activities in a sorted activity list
      * We will store the information about the customer in a sorted customer list .
      */
-    private static void readFileInput(){
+    private static void readFileInput() {
 
         try {
             File importedFile = new File("input.txt");
@@ -104,31 +104,31 @@ public class MainProgram {
 
                 if (counter == 0) {
                     tempTotalNumberOfActivity = Integer.parseInt(data);      // The first entry will always be considered as the tempTotalNumberOfActivity
-                } else if (activityMap.size() < tempTotalNumberOfActivity) { // We will check if our map size is less than the TotalNumberOfActivity
+                } else if (activitySortedArrayList.size() < tempTotalNumberOfActivity) { // We will check if our map size is less than the TotalNumberOfActivity
                     if (isString) {                                          // Check if it's String ,if String it mean it's a key i.e activity name
                         tempKey = data;                                      // store the key in tem variable
-                        activityMap.put(data, null);                         // Initially keep the value of the key as null always
                         System.out.println("key -> " + data);
-                    } else if (activityMap.get(tempKey) == null) {           // If isString is false and value is null for the previous key which we stored in the tmp variable
+                    } else {           // If isString is false and value is null for the previous key which we stored in the tmp variable
                         System.out.println("value for key -> " + tempKey + " is -> " + data);
-                        activityMap.put(tempKey, new Activity(tempKey, Integer.parseInt(data)));    // We will add the value i.e total number of tickets for the activity in the map
-                        activitySortedArrayList.insert(activitySortedArrayList, new Activity(tempKey, Integer.parseInt(data)));
+
+                        //check if activity already exists
+                        if (checkIfActivityExist(new Activity(tempKey, Integer.parseInt(data))) == null) {
+                            activitySortedArrayList.insert(activitySortedArrayList, new Activity(tempKey, Integer.parseInt(data)));
+                        } else {
+                            throw new ActivityException("Activity already exists, Please check the input data. Duplicate activity entry are not allowed!");
+                        }
                     }
-                } else if (activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) == null) { // This condition check is always for the last value i.e total number of tickets for the activity
-                    System.out.println("value for the last key -> " + tempKey + " is -> " + data);
-                    activityMap.put(tempKey, new Activity(tempKey, Integer.parseInt(data)));        // Add the value to the last activity
-                    activitySortedArrayList.insert(activitySortedArrayList, new Activity(tempKey, Integer.parseInt(data)));
-                } else if (!isString && activityMap.size() == tempTotalNumberOfActivity && activityMap.get(tempKey) != null) { // This condition check is always for setting the total number of person
+                } else if (!isString && activitySortedArrayList.size() == tempTotalNumberOfActivity) { // This condition check is always for setting the total number of person
                     tempTotalNumberOfPerson = Integer.parseInt(data);
                     System.out.println("tempTotalNumberOfPerson -> " + tempTotalNumberOfPerson);
                 } else if (customersSortedArrayList.size() <= tempTotalNumberOfPerson && tempTotalNumberOfPerson > 0) { // This conditions satisfies only when we have the details about total number of person
                     String[] firstNameLastName = data.split(" ");                                       // and the customer list size is less than total number of person
                     if (firstNameLastName.length > 1) {
-                            if (checkIfCustomerExist(new Customer(firstNameLastName[0], firstNameLastName[1])) == null) {
-                                customersSortedArrayList.insert(customersSortedArrayList, new Customer(firstNameLastName[0], firstNameLastName[1]));// Check if we have both first and last name else show message
-                            }else{
-                                throw new CustomerException("Customer already exists, Please check, first name and last name in input data!");
-                            }
+                        if (checkIfCustomerExist(new Customer(firstNameLastName[0], firstNameLastName[1])) == null) {
+                            customersSortedArrayList.insert(customersSortedArrayList, new Customer(firstNameLastName[0], firstNameLastName[1]));// Check if we have both first and last name else show message
+                        } else {
+                            throw new CustomerException("Customer already exists, Please check, first name and last name in input data!");
+                        }
                     } else {
                         System.out.println("Customer either don't have first name or last name , Please check your input file!" + data);
                     }
@@ -137,7 +137,7 @@ public class MainProgram {
 
                 counter++;
             }
-        } catch (FileNotFoundException | CustomerException exception) {
+        } catch (FileNotFoundException | CustomerException | ActivityException exception) {
             System.out.println(exception.getMessage());
             System.exit(0);
         }
@@ -175,6 +175,7 @@ public class MainProgram {
      * 4. Customer can only register for the total number of activities provided
      * 5. If the customer is canceling the ticket check if the customer is already purchase the ticket or not
      * 6. Also update the customer and activity details accordingly whenever customer is buying or cancel the ticket .
+     * 7. If the customer is already registered for one of the activities and buying the ticket again , will allow to purchase the ticket again.
      * e.g. The no. of ticket left out of the no. of tickets available.
      * The total number of tickets purchased but the ticket for each activity.
      */
@@ -207,17 +208,26 @@ public class MainProgram {
                 return false;
             }
 
-            // if customer is already registered for 3 activities
-            if (existingCustomer.getTotalNumberOfActivityRegistered() == 3) {
+            // if customer is buying the another ticket for the registered activity again
+            // then we need to allow the customer to buy the ticket
+            if (checkIfCustomerHaveAssignedTicketForTheProvidedActivity(existingCustomer, existingActivity)) {
+                buyTicket(existingCustomer, existingActivity, 1);
+                System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the another ticket, the total no.of ticket " + existingCustomer.getNumberOfTicketBoughtEachActivity().get(existingActivity) + " for the same activity : " + existingActivity.getActivityName() + ".");
+                clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the another ticket, the total no.of ticket " + existingCustomer.getNumberOfTicketBoughtEachActivity().get(existingActivity) + " for the same activity : " + existingActivity.getActivityName() + ".");
+                return true;
+            }
+
+            // check if customer has already registered for the number of allowed activity
+            if (existingCustomer.getTotalNumberOfActivityRegistered() == NUMBER_OF_ALLOWED_REGISTRATION) {
                 System.out.println("Hi " + existingCustomer.getLastName() + " you have been already registered for max no.of  activity.");
                 clerk.println("Hi " + existingCustomer.getLastName() + " you have been already registered for max no.of  activity.");
                 return false;
             }
 
             if (buyTicket(existingCustomer, existingActivity, 1)) {
-                existingActivity.setTotalNumberOfTicketAvailablePerActivity(existingActivity.getTotalNumberOfTicketAvailablePerActivity() - 1);
-                System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the ticket the no.of ticket " + 1 + " for the activity " + existingActivity.getActivityName() + ".");
-                clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the ticket the no.of ticket " + 1 + " for the activity " + existingActivity.getActivityName() + ".");
+                System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase 1 ticket for the activity : " + existingActivity.getActivityName() + ".");
+                clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase 1 ticket for the activity : " + existingActivity.getActivityName() + ".");
+                return true;
             }
         } else {
             // check if Customer has purchased any ticket in the past for the provided activity
@@ -228,9 +238,9 @@ public class MainProgram {
             }
 
             if (cancelTicket(existingCustomer, existingActivity, 1)) {
-                existingActivity.setTotalNumberOfTicketAvailablePerActivity(existingActivity.getTotalNumberOfTicketAvailablePerActivity() + 1);
                 System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully canceled the ticket the no.of ticket " + 1 + " for the activity " + existingActivity.getActivityName() + ".");
                 clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully canceled the ticket the no.of ticket " + 1 + " for the activity " + existingActivity.getActivityName() + ".");
+                return true;
             }
         }
         return isBuying;
@@ -266,8 +276,9 @@ public class MainProgram {
      * Check if the activity existing or not ,return null if not in the list
      */
     private static Activity checkIfActivityExist(Activity activity) {
-        for (String key : activityMap.keySet())
-            if (key.equalsIgnoreCase(activity.getActivityName())) return activityMap.get(key);
+        for (Activity act : activitySortedArrayList) {
+            if (act.getActivityName().equalsIgnoreCase(activity.getActivityName())) return act;
+        }
         return null;
     }
 
@@ -293,8 +304,12 @@ public class MainProgram {
      * Check if the ticket is available or not ,return false if not available
      */
     public static boolean checkIfTicketIsAvailableForTheProvidedActivity(Activity activity) {
-        int numberOfTicketAvailable = activityMap.get(activity.getActivityName()).getTotalNumberOfTicketAvailablePerActivity();
-        return numberOfTicketAvailable > 0;
+        for (Activity act : activitySortedArrayList) {
+            if (act.getActivityName().equalsIgnoreCase(activity.getActivityName())) {
+                return act.getTotalNumberOfTicketAvailablePerActivity() > 0;
+            }
+        }
+        return false;
     }
 
     /**
@@ -304,6 +319,9 @@ public class MainProgram {
      * Check if the customer has already purchased the ticket for the provided activity
      */
     public static boolean checkIfCustomerHaveAssignedTicketForTheProvidedActivity(Customer customer, Activity activity) {
+        if (customer.getNumberOfTicketBoughtEachActivity().get(activity) == null) {
+            return false;
+        }
         return customer.getNumberOfTicketBoughtEachActivity().get(activity) > 0;
     }
 
@@ -332,11 +350,13 @@ public class MainProgram {
         if (customer.getNumberOfTicketBoughtEachActivity().get(activity) == null) {
             customer.getNumberOfTicketBoughtEachActivity().put(activity, numOfTicketBuying);
             customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() + 1);
+            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity()-1);
             return true;
 
         } else if (customer.getNumberOfTicketBoughtEachActivity().get(activity) != null) {
             int oldValue = customer.getNumberOfTicketBoughtEachActivity().get(activity);
             customer.getNumberOfTicketBoughtEachActivity().put(activity, oldValue + 1);
+            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity()-1);
             return true;
         }
         return false;
@@ -356,10 +376,11 @@ public class MainProgram {
         int oldValue = customer.getNumberOfTicketBoughtEachActivity().get(activity);
         if (oldValue > 1) {
             customer.getNumberOfTicketBoughtEachActivity().put(activity, oldValue - numOfTicketCancelling);
+            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity()+numOfTicketCancelling);
             return true;
         } else if (oldValue == 1) {
             customer.getNumberOfTicketBoughtEachActivity().put(activity, 0);
-            customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() - 1);
+            customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() +numOfTicketCancelling);
             return true;
         }
         return false;
