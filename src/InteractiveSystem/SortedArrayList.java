@@ -74,7 +74,7 @@ public class SortedArrayList<E> extends ArrayList<E>{
      *  to,In, the next loop we will search for the activity in the sortedArrayList by binary search technique
      *  By getting the mid-value and compare the object by calling the compare to method based on that we will return the position i.e index
      *  once we get the index , we will call the move method from the sortedArrayList class to change the position of the sortedArrayList element
-     *  after that we will the object in the provided sortedArrayList
+     *  after that we will the add object in the provided sortedArrayList
      */
     <E> void insert(List<E> sortedArrayList, E key){
         ListIterator<E> listIterator= sortedArrayList.listIterator(sortedArrayList.size());
