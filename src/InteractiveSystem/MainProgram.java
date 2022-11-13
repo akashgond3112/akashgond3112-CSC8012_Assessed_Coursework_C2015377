@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class MainProgram {
 
-    final static int NUMBER_OF_ALLOWED_REGISTRATION=3;
+    final static int NUMBER_OF_ALLOWED_REGISTRATION = 3;
     public static int tempTotalNumberOfPerson = 0;
     public static int tempTotalNumberOfActivity = 0;
     public static Scanner k = new Scanner(System.in);
@@ -20,14 +20,29 @@ public class MainProgram {
     public static void main(String[] args) {
         PrintWriter clerk = null;
         PrintWriter letters = null;
+
+        String CLERK_FILE_PATH = args[0];
+        String LETTER_FILE_PATH = args[1];
+        String INPUT_FILE_PATH = args[2];
+
         try {
-            clerk = new PrintWriter("clerk.txt");
-            letters = new PrintWriter("letters.txt");
+            if (CLERK_FILE_PATH != null && LETTER_FILE_PATH != null) {
+                clerk = new PrintWriter(CLERK_FILE_PATH);
+                letters = new PrintWriter(LETTER_FILE_PATH);
+            } else {
+                clerk = new PrintWriter("clerk.txt");
+                letters = new PrintWriter("letters.txt");
+            }
+
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
+        if (INPUT_FILE_PATH != null) {
+            readFileInput(INPUT_FILE_PATH);
+        } else {
+            readFileInput("letters.txt"); // read input file when the main program starts
+        }
 
-        readFileInput(); // read input file when the main program starts
         printUserMenu(); // Initialize user menu with user menu
 
         char userInput = k.next().charAt(0);
@@ -78,10 +93,10 @@ public class MainProgram {
      * We will store the information about the activities in a sorted activity list
      * We will store the information about the customer in a sorted customer list .
      */
-    private static void readFileInput() {
+    private static void readFileInput(String path) {
 
         try {
-            File importedFile = new File("input.txt");
+            File importedFile = new File(path);
             Scanner fileInput = new Scanner(importedFile);
             int counter = 0;
             boolean isString = false;
@@ -350,13 +365,13 @@ public class MainProgram {
         if (customer.getNumberOfTicketBoughtEachActivity().get(activity) == null) {
             customer.getNumberOfTicketBoughtEachActivity().put(activity, numOfTicketBuying);
             customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() + 1);
-            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity()-1);
+            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity() - 1);
             return true;
 
         } else if (customer.getNumberOfTicketBoughtEachActivity().get(activity) != null) {
             int oldValue = customer.getNumberOfTicketBoughtEachActivity().get(activity);
             customer.getNumberOfTicketBoughtEachActivity().put(activity, oldValue + 1);
-            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity()-1);
+            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity() - 1);
             return true;
         }
         return false;
@@ -376,11 +391,11 @@ public class MainProgram {
         int oldValue = customer.getNumberOfTicketBoughtEachActivity().get(activity);
         if (oldValue > 1) {
             customer.getNumberOfTicketBoughtEachActivity().put(activity, oldValue - numOfTicketCancelling);
-            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity()+numOfTicketCancelling);
+            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity() + numOfTicketCancelling);
             return true;
         } else if (oldValue == 1) {
             customer.getNumberOfTicketBoughtEachActivity().put(activity, 0);
-            customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() +numOfTicketCancelling);
+            customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() + numOfTicketCancelling);
             return true;
         }
         return false;
