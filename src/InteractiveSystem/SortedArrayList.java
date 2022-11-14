@@ -87,5 +87,23 @@ public class SortedArrayList<E> extends ArrayList<E>{
         listIterator.nextIndex();
     }
 
+    @Override
+    public boolean add(E element)
+    {
+        int i = 0;
+        for (Iterator<E> it = this.iterator(); it.hasNext();)
+        {
+            Comparable<E> current = (Comparable<E>) it.next();
+            int comparator = current.compareTo(element);
+            if(comparator>0)
+            {
+                super.add(i, element);
+                return true;
+            }
+            i++;
+        }
+        return super.add(element);
+    }
+
 
 }

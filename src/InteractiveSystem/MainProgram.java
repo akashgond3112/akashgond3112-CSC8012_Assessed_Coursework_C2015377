@@ -21,28 +21,15 @@ public class MainProgram {
         PrintWriter clerk = null;
         PrintWriter letters = null;
 
-        String CLERK_FILE_PATH = args[0];
-        String LETTER_FILE_PATH = args[1];
-        String INPUT_FILE_PATH = args[2];
-
         try {
-            if (CLERK_FILE_PATH != null && LETTER_FILE_PATH != null) {
-                clerk = new PrintWriter(CLERK_FILE_PATH);
-                letters = new PrintWriter(LETTER_FILE_PATH);
-            } else {
-                clerk = new PrintWriter("clerk.txt");
-                letters = new PrintWriter("letters.txt");
-            }
+            clerk = new PrintWriter("clerk.txt");
+            letters = new PrintWriter("letters.txt");
 
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
-        if (INPUT_FILE_PATH != null) {
-            readFileInput(INPUT_FILE_PATH);
-        } else {
-            readFileInput("letters.txt"); // read input file when the main program starts
-        }
 
+        readFileInput(); // read input file when the main program starts
         printUserMenu(); // Initialize user menu with user menu
 
         char userInput = k.next().charAt(0);
@@ -93,10 +80,10 @@ public class MainProgram {
      * We will store the information about the activities in a sorted activity list
      * We will store the information about the customer in a sorted customer list .
      */
-    private static void readFileInput(String path) {
+    private static void readFileInput() {
 
         try {
-            File importedFile = new File(path);
+            File importedFile = new File("C:\\Users\\akash\\IdeaProjects\\CSC8012_Assessed_Coursework_C2015377\\input.txt");
             Scanner fileInput = new Scanner(importedFile);
             int counter = 0;
             boolean isString = false;
