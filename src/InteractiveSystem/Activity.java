@@ -1,7 +1,6 @@
 package InteractiveSystem;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
 
 public class Activity implements Comparable<Activity> {
 
@@ -43,9 +42,9 @@ public class Activity implements Comparable<Activity> {
         return activityName.compareTo(activity.activityName);
     }
 
-    public void printName(PrintWriter f) {
-        f.println(activityName);
-        System.out.println(activityName);
+    public void printDetails(PrintWriter f) {
+        f.println("Activity name : "+activityName +", Total number of ticket available = "+totalNumberOfTicketAvailablePerActivity);
+        System.out.println("Activity name : "+activityName +", Total number of ticket available = "+totalNumberOfTicketAvailablePerActivity);
     }
 
 }

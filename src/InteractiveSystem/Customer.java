@@ -4,13 +4,13 @@ package InteractiveSystem;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-public class Customer implements Comparable<Customer>{
+public class Customer implements Comparable<Customer> {
 
     private String firstName;
 
     private String lastName;
 
-    private HashMap<Activity,Integer> numberOfTicketBoughtEachActivity = new HashMap<>();
+    private HashMap<Activity, Integer> numberOfTicketBoughtEachActivity = new HashMap<>();
 
     private int totalNumberOfActivityRegistered;
 
@@ -53,9 +53,20 @@ public class Customer implements Comparable<Customer>{
         return numberOfTicketBoughtEachActivity;
     }
 
-    public void printName(PrintWriter f) {
-        f.println(lastName + " -> " + firstName);
-        System.out.println(lastName + " -> " + firstName);
+    public void printDetails(PrintWriter f) {
+        StringBuilder sb = new StringBuilder(firstName +" "+ lastName);
+
+        if (totalNumberOfActivityRegistered == 0) {
+            sb.append(", You have been registered for ").append(totalNumberOfActivityRegistered).append(", activity.");
+        } else {
+            sb.append(", You have been registered for ").append(totalNumberOfActivityRegistered).append(", activities.").append(" \n");
+            getNumberOfTicketBoughtEachActivity().forEach((key, value) -> {
+                sb.append("Ticket bought for activity, ").append(key.getActivityName()).append(" is ").append(value).append(".\n");
+            });
+            sb.append("-----------------------------------------------------------------------------------------------");
+        }
+        f.println(sb.toString());
+        System.out.println(sb.toString());
     }
 
     public boolean equals(Customer otherCustomer) {
@@ -66,7 +77,7 @@ public class Customer implements Comparable<Customer>{
     @Override
     public int compareTo(Customer customer) {
         int lnCmp = lastName.compareTo(customer.lastName);
-        if (lnCmp !=0) return lnCmp;
+        if (lnCmp != 0) return lnCmp;
         int fnCmp = firstName.compareTo(customer.firstName);
         if (fnCmp != 0) return fnCmp;
         else return 1;
