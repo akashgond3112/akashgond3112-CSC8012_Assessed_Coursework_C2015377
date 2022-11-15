@@ -58,6 +58,8 @@ public class TicketOffice {
 
         Activity activity = readActivityDetails(k);
 
+        int noOfTicketToBuyOrCancel = readNoOfTicketToBuyOrCancel(k);
+
         Customer existingCustomer = checkIfCustomerExist(customer);
 
         // first check if customer exist or not
@@ -67,7 +69,7 @@ public class TicketOffice {
             return false;
         }
 
-        Activity existingActivity = checkIfActivityExist(activity);
+        Activity existingActivity = checkActivityExist(activity);
 
         // check if Activity is available
         if (existingActivity == null) {
@@ -79,7 +81,7 @@ public class TicketOffice {
         // If Customer is Purchasing the ticket isBuying will be true, or if cancelling the ticket it will be false
         if (isBuying) {
             // check if ticket is available for the activity
-            if (!checkIfTicketIsAvailableForTheProvidedActivity(existingActivity)) {
+            if (!checkIfTickteIAvailableForActivity(existingActivity)) {
                 System.out.println("There is no more ticket available for the activity " + existingActivity.getActivityName() + ", Please try for another activity.");
                 printLetter(letters, existingCustomer, existingActivity);
                 return false;
@@ -87,34 +89,34 @@ public class TicketOffice {
 
             // if customer is buying the another ticket for the registered activity again
             // then we need to allow the customer to buy the ticket
-            if (checkIfCustomerHaveAssignedTicketForTheProvidedActivity(existingCustomer, existingActivity)) {
-                buyTicket(existingCustomer, existingActivity, 1);
-                System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the another ticket, the total no.of ticket " + existingCustomer.getNumberOfTicketBoughtEachActivity().get(existingActivity) + " for the same activity : " + existingActivity.getActivityName() + ".");
-                clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the another ticket, the total no.of ticket " + existingCustomer.getNumberOfTicketBoughtEachActivity().get(existingActivity) + " for the same activity : " + existingActivity.getActivityName() + ".");
+            if (checkIfCustomerGotTicketForTheActivity(existingCustomer, existingActivity)) {
+                buyTicket(existingCustomer, existingActivity, noOfTicketToBuyOrCancel);
+                System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the another ticket, the total no.of ticket " + existingCustomer.getNoOfTicketForActivity().get(existingActivity) + " for the same activity : " + existingActivity.getActivityName() + ".");
+                clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase the another ticket, the total no.of ticket " + existingCustomer.getNoOfTicketForActivity().get(existingActivity) + " for the same activity : " + existingActivity.getActivityName() + ".");
                 return true;
             }
 
             // check if customer has already registered for the number of allowed activity
-            if (existingCustomer.getTotalNumberOfActivityRegistered() == NUMBER_OF_ALLOWED_REGISTRATION) {
+            if (existingCustomer.getNoOfActivityRegistered() == NUMBER_OF_ALLOWED_REGISTRATION) {
                 System.out.println("Hi " + existingCustomer.getLastName() + " you have been already registered for max no.of  activity.");
                 clerk.println("Hi " + existingCustomer.getLastName() + " you have been already registered for max no.of  activity.");
                 return false;
             }
 
-            if (buyTicket(existingCustomer, existingActivity, 1)) {
+            if (buyTicket(existingCustomer, existingActivity, noOfTicketToBuyOrCancel)) {
                 System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase 1 ticket for the activity : " + existingActivity.getActivityName() + ".");
                 clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully purchase 1 ticket for the activity : " + existingActivity.getActivityName() + ".");
                 return true;
             }
         } else {
             // check if Customer has purchased any ticket in the past for the provided activity
-            if (!checkIfCustomerHaveAssignedTicketForTheProvidedActivity(existingCustomer, existingActivity)) {
+            if (!checkIfCustomerGotTicketForTheActivity(existingCustomer, existingActivity)) {
                 System.out.println("There is no ticket found for the activity " + existingActivity.getActivityName() + ", Please try to cancel the ticket for another activity.");
                 clerk.println("There is no ticket found for the activity " + existingActivity.getActivityName() + ", Please try to cancel the ticket for another activity.");
                 return false;
             }
 
-            if (cancelTicket(existingCustomer, existingActivity, 1)) {
+            if (cancelTicket(existingCustomer, existingActivity, noOfTicketToBuyOrCancel)) {
                 System.out.println("Hi " + existingCustomer.getLastName() + " you have Successfully canceled the ticket the no.of ticket " + 1 + " for the activity " + existingActivity.getActivityName() + ".");
                 clerk.println("Hi " + existingCustomer.getLastName() + " you have Successfully canceled the ticket the no.of ticket " + 1 + " for the activity " + existingActivity.getActivityName() + ".");
                 return true;
@@ -148,11 +150,22 @@ public class TicketOffice {
     }
 
     /**
+     * @return Customer object
+     * Take the input from the user and return the customer object
+     */
+    int readNoOfTicketToBuyOrCancel(Scanner k) {
+        System.out.println("Enter Number of ticket customer want to buy/cancel.");
+        int noOfTicket = Integer.parseInt(k.next());
+        k.nextLine();
+        return noOfTicket;
+    }
+
+    /**
      * @param activity object as input from the user
      * @return activity object
      * Check if the activity existing or not ,return null if not in the list
      */
-    public Activity checkIfActivityExist(Activity activity) {
+    public Activity checkActivityExist(Activity activity) {
         for (Activity act : activitySortedArrayList) {
             if (act.getActivityName().equalsIgnoreCase(activity.getActivityName())) return act;
         }
@@ -180,10 +193,10 @@ public class TicketOffice {
      * @return boolean
      * Check if the ticket is available or not ,return false if not available
      */
-    public boolean checkIfTicketIsAvailableForTheProvidedActivity(Activity activity) {
+    public boolean checkIfTickteIAvailableForActivity(Activity activity) {
         for (Activity act : activitySortedArrayList) {
             if (act.getActivityName().equalsIgnoreCase(activity.getActivityName())) {
-                return act.getTotalNumberOfTicketAvailablePerActivity() > 0;
+                return act.getNoOfTicketAvailableForActivity() > 0;
             }
         }
         return false;
@@ -195,11 +208,11 @@ public class TicketOffice {
      * @return boolean
      * Check if the customer has already purchased the ticket for the provided activity
      */
-    public boolean checkIfCustomerHaveAssignedTicketForTheProvidedActivity(Customer customer, Activity activity) {
-        if (customer.getNumberOfTicketBoughtEachActivity().get(activity) == null) {
+    public boolean checkIfCustomerGotTicketForTheActivity(Customer customer, Activity activity) {
+        if (customer.getNoOfTicketForActivity().get(activity) == null) {
             return false;
         }
-        return customer.getNumberOfTicketBoughtEachActivity().get(activity) > 0;
+        return customer.getNoOfTicketForActivity().get(activity) > 0;
     }
 
     /**
@@ -224,16 +237,16 @@ public class TicketOffice {
      * @return if successfully purchased the ticket
      */
     public boolean buyTicket(Customer customer, Activity activity, int numOfTicketBuying) {
-        if (customer.getNumberOfTicketBoughtEachActivity().get(activity) == null) {
-            customer.getNumberOfTicketBoughtEachActivity().put(activity, numOfTicketBuying);
-            customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() + 1);
-            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity() - 1);
+        if (customer.getNoOfTicketForActivity().get(activity) == null) {
+            customer.getNoOfTicketForActivity().put(activity, numOfTicketBuying);
+            customer.setNoOfActivityRegistered(customer.getNoOfActivityRegistered() + 1);
+            activity.setNoOfTicketAvailableForActivity(activity.getNoOfTicketAvailableForActivity() - 1);
             return true;
 
-        } else if (customer.getNumberOfTicketBoughtEachActivity().get(activity) != null) {
-            int oldValue = customer.getNumberOfTicketBoughtEachActivity().get(activity);
-            customer.getNumberOfTicketBoughtEachActivity().put(activity, oldValue + 1);
-            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity() - 1);
+        } else if (customer.getNoOfTicketForActivity().get(activity) != null) {
+            int oldValue = customer.getNoOfTicketForActivity().get(activity);
+            customer.getNoOfTicketForActivity().put(activity, oldValue + 1);
+            activity.setNoOfTicketAvailableForActivity(activity.getNoOfTicketAvailableForActivity() - 1);
             return true;
         }
         return false;
@@ -250,14 +263,14 @@ public class TicketOffice {
      * @return if successfully purchased the ticket
      */
     public boolean cancelTicket(Customer customer, Activity activity, int numOfTicketCancelling) {
-        int oldValue = customer.getNumberOfTicketBoughtEachActivity().get(activity);
+        int oldValue = customer.getNoOfTicketForActivity().get(activity);
         if (oldValue > 1) {
-            customer.getNumberOfTicketBoughtEachActivity().put(activity, oldValue - numOfTicketCancelling);
-            activity.setTotalNumberOfTicketAvailablePerActivity(activity.getTotalNumberOfTicketAvailablePerActivity() + numOfTicketCancelling);
+            customer.getNoOfTicketForActivity().put(activity, oldValue - numOfTicketCancelling);
+            activity.setNoOfTicketAvailableForActivity(activity.getNoOfTicketAvailableForActivity() + numOfTicketCancelling);
             return true;
         } else if (oldValue == 1) {
-            customer.getNumberOfTicketBoughtEachActivity().put(activity, 0);
-            customer.setTotalNumberOfActivityRegistered(customer.getTotalNumberOfActivityRegistered() + numOfTicketCancelling);
+            customer.getNoOfTicketForActivity().put(activity, 0);
+            customer.setNoOfActivityRegistered(customer.getNoOfActivityRegistered() + numOfTicketCancelling);
             return true;
         }
         return false;

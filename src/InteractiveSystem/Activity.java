@@ -21,11 +21,11 @@ public class Activity implements Comparable<Activity> {
         this.totalNumberOfTicketAvailablePerActivity = totalNumberOfTicketAvailablePerActivity;
     }
 
-    public int getTotalNumberOfTicketAvailablePerActivity() {
+    public int getNoOfTicketAvailableForActivity() {
         return totalNumberOfTicketAvailablePerActivity;
     }
 
-    public void setTotalNumberOfTicketAvailablePerActivity(int totalNumberOfTicketAvailablePerActivity) {
+    public void setNoOfTicketAvailableForActivity(int totalNumberOfTicketAvailablePerActivity) {
         this.totalNumberOfTicketAvailablePerActivity = totalNumberOfTicketAvailablePerActivity;
     }
 

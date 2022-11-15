@@ -114,7 +114,7 @@ public class MainProgram {
                     } else {           // If isString is false and value is null for the previous key which we stored in the tmp variable
                         System.out.println("value for key -> " + tempKey + " is -> " + data);
                         //check if activity already exists
-                        if (ticketOffice.checkIfActivityExist(new Activity(tempKey, Integer.parseInt(data))) == null) {
+                        if (ticketOffice.checkActivityExist(new Activity(tempKey, Integer.parseInt(data))) == null) {
                             activitySortedArrayList.add(new Activity(tempKey, Integer.parseInt(data)));
                         } else {
                             throw new ActivityException("Activity already exists, Please check the input data. Duplicate activity entry are not allowed!");

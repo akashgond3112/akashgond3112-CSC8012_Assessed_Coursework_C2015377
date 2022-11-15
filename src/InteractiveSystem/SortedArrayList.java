@@ -29,6 +29,4 @@ public class SortedArrayList<E> extends ArrayList<E>{
         }
         return super.add(element);
     }
-
-
 }

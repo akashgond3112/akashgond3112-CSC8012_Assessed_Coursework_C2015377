@@ -12,7 +12,7 @@ public class Customer implements Comparable<Customer> {
 
     private HashMap<Activity, Integer> numberOfTicketBoughtEachActivity = new HashMap<>();
 
-    private int totalNumberOfActivityRegistered;
+    private int totalNoOfActivityRegistered;
 
     public Customer() {
         this.firstName = "";
@@ -41,26 +41,26 @@ public class Customer implements Comparable<Customer> {
         this.lastName = lastName;
     }
 
-    public int getTotalNumberOfActivityRegistered() {
-        return totalNumberOfActivityRegistered;
+    public int getNoOfActivityRegistered() {
+        return totalNoOfActivityRegistered;
     }
 
-    public void setTotalNumberOfActivityRegistered(int totalNumberOfActivityRegistered) {
-        this.totalNumberOfActivityRegistered = totalNumberOfActivityRegistered;
+    public void setNoOfActivityRegistered(int totalNumberOfActivityRegistered) {
+        this.totalNoOfActivityRegistered = totalNumberOfActivityRegistered;
     }
 
-    public HashMap<Activity, Integer> getNumberOfTicketBoughtEachActivity() {
+    public HashMap<Activity, Integer> getNoOfTicketForActivity() {
         return numberOfTicketBoughtEachActivity;
     }
 
     public void printDetails(PrintWriter f) {
         StringBuilder sb = new StringBuilder(firstName +" "+ lastName);
 
-        if (totalNumberOfActivityRegistered == 0) {
-            sb.append(", You have been registered for ").append(totalNumberOfActivityRegistered).append(", activity.");
+        if (totalNoOfActivityRegistered == 0) {
+            sb.append(", You have been registered for ").append(totalNoOfActivityRegistered).append(", activity.");
         } else {
-            sb.append(", You have been registered for ").append(totalNumberOfActivityRegistered).append(", activities.").append(" \n");
-            getNumberOfTicketBoughtEachActivity().forEach((key, value) -> {
+            sb.append(", You have been registered for ").append(totalNoOfActivityRegistered).append(", activities.").append(" \n");
+            getNoOfTicketForActivity().forEach((key, value) -> {
                 sb.append("Ticket bought for activity, ").append(key.getActivityName()).append(" is ").append(value).append(".\n");
             });
             sb.append("-----------------------------------------------------------------------------------------------");
