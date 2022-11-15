@@ -145,7 +145,7 @@ public class TicketOffice {
      * Take the input from the user and return the activity object
      */
     public Activity readActivityDetails(Scanner k) {
-        System.out.println("Enter Activity name you want to get registered.");
+        System.out.println("Enter Activity name.");
         String activityName = k.next();
         k.nextLine();
         return new Activity(activityName);
