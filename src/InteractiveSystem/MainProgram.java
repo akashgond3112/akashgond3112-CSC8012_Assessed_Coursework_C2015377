@@ -1,11 +1,9 @@
 package InteractiveSystem;
 
-import Exceptions.ActivityException;
-import Exceptions.CustomerException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainProgram {
@@ -106,10 +104,10 @@ public class MainProgram {
                 }
 
                 if (counter == 0) {
-                    tempTotalNumberOfActivity = Integer.parseInt(data);      // The first entry will always be considered as the tempTotalNumberOfActivity
+                    tempTotalNumberOfActivity = Integer.parseInt(data);                  // The first entry will always be considered as the tempTotalNumberOfActivity
                 } else if (activitySortedArrayList.size() < tempTotalNumberOfActivity) { // We will check if our map size is less than the TotalNumberOfActivity
-                    if (isString) {                                          // Check if it's String ,if String it mean it's a key i.e activity name
-                        tempKey = data;                                      // store the key in tem variable
+                    if (isString) {                                                      // Check if it's String ,if String it mean it's a key i.e activity name
+                        tempKey = data;                                                  // store the activity name in temp variable
                         System.out.println("key -> " + data);
                     } else {           // If isString is false and value is null for the previous key which we stored in the tmp variable
                         System.out.println("value for key -> " + tempKey + " is -> " + data);
@@ -117,7 +115,7 @@ public class MainProgram {
                         if (ticketOffice.checkActivityExist(new Activity(tempKey, Integer.parseInt(data))) == null) {
                             activitySortedArrayList.add(new Activity(tempKey, Integer.parseInt(data)));
                         } else {
-                            throw new ActivityException("Activity already exists, Please check the input data. Duplicate activity entry are not allowed!");
+                            throw new InputMismatchException("Activity already exists, Please check the input data. Duplicate activity entry are not allowed!");
                         }
                     }
                 } else if (!isString && activitySortedArrayList.size() == tempTotalNumberOfActivity) { // This condition check is always for setting the total number of person
@@ -129,17 +127,17 @@ public class MainProgram {
                         if (ticketOffice.checkIfCustomerExist(new Customer(firstNameLastName[0], firstNameLastName[1])) == null) {
                             customersSortedArrayList.add(new Customer(firstNameLastName[0], firstNameLastName[1]));// Check if we have both first and last name else show message
                         } else {
-                            throw new CustomerException("Customer already exists, Please check, first name and last name in input data!");
+                            throw new InputMismatchException("Customer already exists, Please check, first name and last name in input data!");
                         }
                     } else {
-                        System.out.println("Customer either don't have first name or last name , Please check your input file!" + data);
+                        throw new InputMismatchException("Customer either don't have first name or last name , Please check your input file!" + data);
                     }
                 }
                 isString = false;
 
                 counter++;
             }
-        } catch (FileNotFoundException | CustomerException | ActivityException exception) {
+        } catch (FileNotFoundException | InputMismatchException exception) {
             System.out.println(exception.getMessage());
             System.exit(0);
         }
