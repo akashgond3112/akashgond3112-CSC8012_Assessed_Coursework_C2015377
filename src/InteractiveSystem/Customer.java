@@ -63,7 +63,6 @@ public class Customer implements Comparable<Customer> {
             getNoOfTicketForActivity().forEach((key, value) -> {
                 sb.append("Ticket bought for activity, ").append(key.getActivityName()).append(" is ").append(value).append(".\n");
             });
-            sb.append("-----------------------------------------------------------------------------------------------");
         }
         f.println(sb.toString());
         System.out.println(sb.toString());

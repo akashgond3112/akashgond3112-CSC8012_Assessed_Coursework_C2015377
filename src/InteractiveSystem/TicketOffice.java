@@ -6,6 +6,7 @@ import java.util.Scanner;
 @SuppressWarnings("FieldMayBeFinal")
 public class TicketOffice {
 
+    final String DIVIDER = "-------------------------------------------------------------------------------------------";
     final int NUMBER_OF_ALLOWED_REGISTRATION = 3;
 
     private SortedArrayList<Customer> customersSortedArrayList;
@@ -22,18 +23,22 @@ public class TicketOffice {
      * @param clerk to print the customer input/output details in the clerk.txt file
      */
     void printActivityDetails(PrintWriter clerk) {
+        clerk.println(DIVIDER);
         activitySortedArrayList.forEach(activity -> {
             activity.printDetails(clerk);
         });
+        clerk.println(DIVIDER);
     }
 
     /**
      * @param clerk to print the customer input/output details in the clerk.txt file
      */
     void printCustomerDetails(PrintWriter clerk) {
+        clerk.println(DIVIDER);
         customersSortedArrayList.forEach(customer -> {
             customer.printDetails(clerk);
         });
+        clerk.println(DIVIDER);
     }
 
     /**
