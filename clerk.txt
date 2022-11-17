@@ -11,7 +11,99 @@ Ted Jones, You have been registered for 0, activity.
 Anna Smith, You have been registered for 0, activity.
 Michael Smith, You have been registered for 0, activity.
 -------------------------------------------------------------------------------------------
-Hi gond, Sorry, But we cannot find you as an registered customer.
-The provided activity : Hiking123 doesn't exist, Please try entering the correct activity from the below list.
-Your input seems to be incorrect, Please enter a valid ticket number you want buy.
-Hi Jones you have Successfully purchase 0, ticket for the activity : Hiking.
+Hi akash gond, Sorry, But we cannot find you as an registered customer.
+The provided activity : hikig doesn't exist, Please try entering the correct activity detail.
+Your input seems to be incorrect, Please try entering a valid ticket number you want buy.
+Hi Ted Jones you have Successfully purchase 1, ticket for the activity : Hiking.
+Hi Ted Jones you have Successfully purchase 2, ticket for the activity : Bowling.
+Hi Ted Jones you have Successfully purchase 2, ticket for the activity : Sailing.
+Hi Jones Jones you have been already registered for max no.of  activity.
+Hi Anna Smith you have Successfully purchase 1, ticket for the activity : Hiking.
+-------------------------------------------------------------------------------------------
+Activity name : Bowling, Total number of ticket available = 6
+Activity name : Cycling, Total number of ticket available = 10
+Activity name : Football, Total number of ticket available = 22
+Activity name : Hiking, Total number of ticket available = 2
+Activity name : Sailing, Total number of ticket available = 1
+Activity name : Table Tennis, Total number of ticket available = 4
+-------------------------------------------------------------------------------------------
+Hi Anna Smith you have Successfully purchase 1, ticket for the activity : Sailing.
+-------------------------------------------------------------------------------------------
+Activity name : Bowling, Total number of ticket available = 6
+Activity name : Cycling, Total number of ticket available = 10
+Activity name : Football, Total number of ticket available = 22
+Activity name : Hiking, Total number of ticket available = 2
+Activity name : Sailing, Total number of ticket available = 0
+Activity name : Table Tennis, Total number of ticket available = 4
+-------------------------------------------------------------------------------------------
+Hi micahel smith, Sorry, But we cannot find you as an registered customer.
+There is no more ticket available for the activity Sailing, Please try for another activity. Hi Michael Smith you have Successfully purchase 2, ticket for the activity : Football.
+-------------------------------------------------------------------------------------------
+Activity name : Bowling, Total number of ticket available = 6
+Activity name : Cycling, Total number of ticket available = 10
+Activity name : Football, Total number of ticket available = 20
+Activity name : Hiking, Total number of ticket available = 2
+Activity name : Sailing, Total number of ticket available = 0
+Activity name : Table Tennis, Total number of ticket available = 4
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+Ted Jones, You have been registered for 3, activities. 
+Ticket bought for activity, Hiking is 1.
+Ticket bought for activity, Sailing is 2.
+Ticket bought for activity, Bowling is 2.
+
+Anna Smith, You have been registered for 2, activities. 
+Ticket bought for activity, Hiking is 1.
+Ticket bought for activity, Sailing is 1.
+
+Michael Smith, You have been registered for 1, activities. 
+Ticket bought for activity, Football is 2.
+
+-------------------------------------------------------------------------------------------
+Hi Ted Jones you have Successfully canceled  1, ticket for the activity Sailing.
+-------------------------------------------------------------------------------------------
+Ted Jones, You have been registered for 3, activities. 
+Ticket bought for activity, Hiking is 1.
+Ticket bought for activity, Sailing is 1.
+Ticket bought for activity, Bowling is 2.
+
+Anna Smith, You have been registered for 2, activities. 
+Ticket bought for activity, Hiking is 1.
+Ticket bought for activity, Sailing is 1.
+
+Michael Smith, You have been registered for 1, activities. 
+Ticket bought for activity, Football is 2.
+
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+Activity name : Bowling, Total number of ticket available = 6
+Activity name : Cycling, Total number of ticket available = 10
+Activity name : Football, Total number of ticket available = 20
+Activity name : Hiking, Total number of ticket available = 2
+Activity name : Sailing, Total number of ticket available = 1
+Activity name : Table Tennis, Total number of ticket available = 4
+-------------------------------------------------------------------------------------------
+Hi Michael Smith you have Successfully purchase 1, ticket for the activity : Sailing.
+-------------------------------------------------------------------------------------------
+Activity name : Bowling, Total number of ticket available = 6
+Activity name : Cycling, Total number of ticket available = 10
+Activity name : Football, Total number of ticket available = 20
+Activity name : Hiking, Total number of ticket available = 2
+Activity name : Sailing, Total number of ticket available = 0
+Activity name : Table Tennis, Total number of ticket available = 4
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+Ted Jones, You have been registered for 3, activities. 
+Ticket bought for activity, Hiking is 1.
+Ticket bought for activity, Sailing is 1.
+Ticket bought for activity, Bowling is 2.
+
+Anna Smith, You have been registered for 2, activities. 
+Ticket bought for activity, Hiking is 1.
+Ticket bought for activity, Sailing is 1.
+
+Michael Smith, You have been registered for 2, activities. 
+Ticket bought for activity, Football is 2.
+Ticket bought for activity, Sailing is 1.
+
+-------------------------------------------------------------------------------------------
