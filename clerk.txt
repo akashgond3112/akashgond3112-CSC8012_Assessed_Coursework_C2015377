@@ -11,33 +11,7 @@ Ted Jones, You have been registered for 0, activity.
 Anna Smith, You have been registered for 0, activity.
 Michael Smith, You have been registered for 0, activity.
 -------------------------------------------------------------------------------------------
-Hi akash, Sorry, But we cannot find you as an registered customer.
-The provided activity : hiking123 doesn't exist, Please try entering the correct activity from the below list.
-Hi Jones you have Successfully purchase 3, ticket for the activity : Hiking.
-Hi Jones you have Successfully purchase 2, ticket for the activity : Bowling.
-Hi Jones you have Successfully purchase 1, ticket for the activity : Sailing.
-Hi Jones you have been already registered for max no.of  activity.
-Hi Smith you have Successfully purchase 1, ticket for the activity : Hiking.
-Hi Jones you have Successfully canceled  1, ticket for the activity Hiking.
-Hi Smith you have Successfully purchase 1, ticket for the activity : Hiking.
--------------------------------------------------------------------------------------------
-Activity name : Bowling, Total number of ticket available = 6
-Activity name : Cycling, Total number of ticket available = 10
-Activity name : Football, Total number of ticket available = 22
-Activity name : Hiking, Total number of ticket available = 0
-Activity name : Sailing, Total number of ticket available = 2
-Activity name : Table Tennis, Total number of ticket available = 4
--------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------
-Ted Jones, You have been registered for 3, activities. 
-Ticket bought for activity, Bowling is 2.
-Ticket bought for activity, Sailing is 1.
-Ticket bought for activity, Hiking is 2.
-
-Anna Smith, You have been registered for 1, activities. 
-Ticket bought for activity, Hiking is 1.
-
-Michael Smith, You have been registered for 1, activities. 
-Ticket bought for activity, Hiking is 1.
-
--------------------------------------------------------------------------------------------
+Hi gond, Sorry, But we cannot find you as an registered customer.
+The provided activity : Hiking123 doesn't exist, Please try entering the correct activity from the below list.
+Your input seems to be incorrect, Please enter a valid ticket number you want buy.
+Hi Jones you have Successfully purchase 0, ticket for the activity : Hiking.
