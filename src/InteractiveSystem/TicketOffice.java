@@ -94,13 +94,13 @@ public class TicketOffice {
                             customer.getFirstName() +
                             " " +
                             customer.getLastName() +
-                            ", Sorry, But we cannot find you as an registered customer.");
+                            ", Sorry, But we cannot find you as a registered customer.");
             clerk.println(
                     "Hi " +
                             customer.getFirstName() +
                             " " +
                             customer.getLastName() +
-                            ", Sorry, But we cannot find you as an registered customer.");
+                            ", Sorry, But we cannot find you as a registered customer.");
             return false;
         }
 
@@ -128,7 +128,7 @@ public class TicketOffice {
                         "There is no more ticket available for the activity " +
                                 existingActivity.getActivityName() +
                                 ", Please try for another activity.");
-                clerk.print("There is no more ticket available for the activity " +
+                clerk.println("There is no more ticket available for the activity " +
                         existingActivity.getActivityName() +
                         ", Please try for another activity. ");
                 printLetter(letters, existingCustomer, existingActivity);
@@ -147,7 +147,7 @@ public class TicketOffice {
                                 existingCustomer.getFirstName() +
                                 " " +
                                 existingCustomer.getLastName() +
-                                " you have Successfully purchase the another ticket, the total no.of ticket " +
+                                " you have Successfully purchased the another ticket, the total no.of ticket " +
                                 existingCustomer.getNoOfTicketForActivity().get(existingActivity) +
                                 " for the same activity : " +
                                 existingActivity.getActivityName() +
@@ -157,7 +157,7 @@ public class TicketOffice {
                                 existingCustomer.getFirstName() +
                                 " " +
                                 existingCustomer.getLastName() +
-                                " you have Successfully purchase the another ticket, the total no.of ticket " +
+                                " you have Successfully purchased the another ticket, the total no.of ticket " +
                                 existingCustomer.getNoOfTicketForActivity().get(existingActivity) +
                                 " for the same activity : " +
                                 existingActivity.getActivityName() +
@@ -172,13 +172,13 @@ public class TicketOffice {
                                 existingCustomer.getFirstName() +
                                 " " +
                                 existingCustomer.getLastName() +
-                                " you have been already registered for max no.of  activity.");
+                                " you have been already registered for max no. of  activity.");
                 clerk.println(
                         "Hi " +
-                                existingCustomer.getLastName() +
+                                existingCustomer.getFirstName() +
                                 " " +
                                 existingCustomer.getLastName() +
-                                " you have been already registered for max no.of  activity.");
+                                " you have been already registered for max no. of  activity.");
                 return false;
             }
 
@@ -188,7 +188,7 @@ public class TicketOffice {
                                 existingCustomer.getFirstName() +
                                 " " +
                                 existingCustomer.getLastName() +
-                                " you have Successfully purchase " +
+                                " you have Successfully purchased " +
                                 noOfTicketToBuyOrCancel +
                                 ", ticket for the activity : " +
                                 existingActivity.getActivityName() +
@@ -198,7 +198,7 @@ public class TicketOffice {
                                 existingCustomer.getFirstName() +
                                 " " +
                                 existingCustomer.getLastName() +
-                                " you have Successfully purchase " +
+                                " you have Successfully purchased " +
                                 noOfTicketToBuyOrCancel +
                                 ", ticket for the activity : " +
                                 existingActivity.getActivityName() +
