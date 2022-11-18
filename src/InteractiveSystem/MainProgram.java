@@ -17,13 +17,10 @@ public class MainProgram {
 
 
     public static void main(String[] args) {
-        PrintWriter clerk = null;
         PrintWriter letters = null;
 
         try {
-            clerk = new PrintWriter("clerk.txt");
             letters = new PrintWriter("letters.txt");
-
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
@@ -35,13 +32,13 @@ public class MainProgram {
         k.nextLine();
         while (userInput != 'f') {
             if (userInput == 'a') {
-                ticketOffice.printActivityDetails(clerk);
+                ticketOffice.printActivityDetails();
             } else if (userInput == 'c') {
-                ticketOffice.printCustomerDetails(clerk);
+                ticketOffice.printCustomerDetails();
             } else if (userInput == 't') {
-                ticketOffice.buyAndCancelTicket(k, clerk, letters, true);
+                ticketOffice.buyAndCancelTicket(k, letters, true);
             } else if (userInput == 'r') {
-                ticketOffice.buyAndCancelTicket(k, clerk, letters, false);
+                ticketOffice.buyAndCancelTicket(k, letters, false);
             } else {
                 System.out.println("Invalid entry, try again");
             }
@@ -49,24 +46,21 @@ public class MainProgram {
             userInput = k.next().charAt(0);
             k.nextLine();
         }
-
-        clerk.close();
         letters.close();
-
     }
 
     /**
      * Method that prints the user menu
      */
     private static void printUserMenu() {
-        System.out.println("------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("MENU");
         System.out.println("f - to finish running the program.");
         System.out.println("a - to display on the screen information about all the activities.");
         System.out.println("c - to display on the screen information about all the customers");
         System.out.println("t - to update the stored data when tickets are bought by one of the registered customers.");
         System.out.println("r - to update the stored data when a registered customer cancels tickets for a booking.");
-        System.out.println("------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("Type a letter and press Enter");
     }
 

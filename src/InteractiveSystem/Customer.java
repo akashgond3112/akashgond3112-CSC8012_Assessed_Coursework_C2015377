@@ -53,7 +53,7 @@ public class Customer implements Comparable<Customer> {
         return numberOfTicketBoughtEachActivity;
     }
 
-    public void printDetails(PrintWriter f) {
+    public void printCustomerDetails() {
         StringBuilder sb = new StringBuilder(firstName +" "+ lastName);
 
         if (totalNoOfActivityRegistered == 0) {
@@ -64,7 +64,6 @@ public class Customer implements Comparable<Customer> {
                 sb.append("Ticket bought for activity, ").append(key.getActivityName()).append(" is ").append(value).append(".\n");
             });
         }
-        f.println(sb.toString());
         System.out.println(sb.toString());
     }
 

@@ -1,4 +1,36 @@
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.3\lib\idea_rt.jar=64560:C:\Program Files\JetBrains\IntelliJ IDEA 2022.2.3\bin" -Dfile.encoding=UTF-8 -classpath C:\Users\akash\development\akashgond3112-CSC8012_Assessed_Coursework_C2015377\out\production\akashgond3112-CSC8012_Assessed_Coursework_C2015377 InteractiveSystem.MainProgram
+For input string: "Hiking"
+key -> Hiking
+value for key -> Hiking is -> 4
+For input string: "Bowling"
+key -> Bowling
+value for key -> Bowling is -> 8
+For input string: "Cycling"
+key -> Cycling
+value for key -> Cycling is -> 10
+For input string: "Sailing"
+key -> Sailing
+value for key -> Sailing is -> 3
+For input string: "Football"
+key -> Football
+value for key -> Football is -> 22
+For input string: "Table Tennis"
+key -> Table Tennis
+value for key -> Table Tennis is -> 4
+tempTotalNumberOfPerson -> 3
+For input string: "Michael Smith"
+For input string: "Anna Smith"
+For input string: "Ted Jones"
 -------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+a
 Activity name : Bowling, Total number of ticket available = 8
 Activity name : Cycling, Total number of ticket available = 10
 Activity name : Football, Total number of ticket available = 22
@@ -6,105 +38,285 @@ Activity name : Hiking, Total number of ticket available = 4
 Activity name : Sailing, Total number of ticket available = 3
 Activity name : Table Tennis, Total number of ticket available = 4
 -------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
 -------------------------------------------------------------------------------------------
+Type a letter and press Enter
+c
 Ted Jones, You have been registered for 0, activity.
 Anna Smith, You have been registered for 0, activity.
 Michael Smith, You have been registered for 0, activity.
 -------------------------------------------------------------------------------------------
-Hi akash gond, Sorry, But we cannot find you as an registered customer.
-The provided activity : hikig doesn't exist, Please try entering the correct activity detail.
-Your input seems to be incorrect, Please try entering a valid ticket number you want buy.
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+Akash gond
+Enter Activity name.
+Hiking
+Enter Number of ticket customer want to buy/cancel.
+1
+Hi Akash gond, Sorry, But we cannot find you as a registered customer.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+Ted jones
+Enter Activity name.
+Hikig
+Enter Number of ticket customer want to buy/cancel.
+1
+The provided activity : Hikig doesn't exist, Please try entering the correct activity detail.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+ted jones
+Enter Activity name.
+Hiking
+Enter Number of ticket customer want to buy/cancel.
+1
 Hi Ted Jones you have Successfully purchased 1, ticket for the activity : Hiking.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+ted jones
+Enter Activity name.
+sailing
+Enter Number of ticket customer want to buy/cancel.
+3
+Hi Ted Jones you have Successfully purchased 3, ticket for the activity : Sailing.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+ted jones
+Enter Activity name.
+bowling
+Enter Number of ticket customer want to buy/cancel.
+2
 Hi Ted Jones you have Successfully purchased 2, ticket for the activity : Bowling.
-Hi Ted Jones you have Successfully purchased 2, ticket for the activity : Sailing.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+ted jones
+Enter Activity name.
+football
+Enter Number of ticket customer want to buy/cancel.
+1
 Hi Ted Jones you have been already registered for max no. of  activity.
-Hi Anna Smith you have Successfully purchased 1, ticket for the activity : Hiking.
 -------------------------------------------------------------------------------------------
-Activity name : Bowling, Total number of ticket available = 6
-Activity name : Cycling, Total number of ticket available = 10
-Activity name : Football, Total number of ticket available = 22
-Activity name : Hiking, Total number of ticket available = 2
-Activity name : Sailing, Total number of ticket available = 1
-Activity name : Table Tennis, Total number of ticket available = 4
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
 -------------------------------------------------------------------------------------------
-Hi Anna Smith you have Successfully purchased 1, ticket for the activity : Sailing.
--------------------------------------------------------------------------------------------
-Activity name : Bowling, Total number of ticket available = 6
-Activity name : Cycling, Total number of ticket available = 10
-Activity name : Football, Total number of ticket available = 22
-Activity name : Hiking, Total number of ticket available = 2
-Activity name : Sailing, Total number of ticket available = 0
-Activity name : Table Tennis, Total number of ticket available = 4
--------------------------------------------------------------------------------------------
-Hi micahel smith, Sorry, But we cannot find you as a registered customer.
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+anna smith
+Enter Activity name.
+sailing
+Enter Number of ticket customer want to buy/cancel.
+1
 There is no more ticket available for the activity Sailing, Please try for another activity.
-Hi Michael Smith you have Successfully purchased 2, ticket for the activity : Football.
 -------------------------------------------------------------------------------------------
-Activity name : Bowling, Total number of ticket available = 6
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+anna smith
+Enter Activity name.
+bowling
+Enter Number of ticket customer want to buy/cancel.
+5
+Hi Anna Smith you have Successfully purchased 5, ticket for the activity : Bowling.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+a
+Activity name : Bowling, Total number of ticket available = 1
 Activity name : Cycling, Total number of ticket available = 10
-Activity name : Football, Total number of ticket available = 20
-Activity name : Hiking, Total number of ticket available = 2
+Activity name : Football, Total number of ticket available = 22
+Activity name : Hiking, Total number of ticket available = 3
 Activity name : Sailing, Total number of ticket available = 0
 Activity name : Table Tennis, Total number of ticket available = 4
 -------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
 -------------------------------------------------------------------------------------------
-Ted Jones, You have been registered for 3, activities.
-Ticket bought for activity, Hiking is 1.
-Ticket bought for activity, Sailing is 2.
-Ticket bought for activity, Bowling is 2.
-
-Anna Smith, You have been registered for 2, activities.
-Ticket bought for activity, Hiking is 1.
-Ticket bought for activity, Sailing is 1.
-
-Michael Smith, You have been registered for 1, activities.
-Ticket bought for activity, Football is 2.
-
--------------------------------------------------------------------------------------------
+Type a letter and press Enter
+r
+Enter person’s first name and last name, and then press Enter
+ted jones
+Enter Activity name.
+sailing
+Enter Number of ticket customer want to buy/cancel.
+1
 Hi Ted Jones you have Successfully canceled  1, ticket for the activity Sailing.
 -------------------------------------------------------------------------------------------
-Ted Jones, You have been registered for 3, activities.
-Ticket bought for activity, Hiking is 1.
-Ticket bought for activity, Sailing is 1.
-Ticket bought for activity, Bowling is 2.
-
-Anna Smith, You have been registered for 2, activities.
-Ticket bought for activity, Hiking is 1.
-Ticket bought for activity, Sailing is 1.
-
-Michael Smith, You have been registered for 1, activities.
-Ticket bought for activity, Football is 2.
-
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
 -------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+anna smith
+Enter Activity name.
+sailing
+Enter Number of ticket customer want to buy/cancel.
+1
+Hi Anna Smith you have Successfully purchased 1, ticket for the activity : Sailing.
 -------------------------------------------------------------------------------------------
-Activity name : Bowling, Total number of ticket available = 6
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+michael smith
+Enter Activity name.
+football
+Enter Number of ticket customer want to buy/cancel.
+4
+Hi Michael Smith you have Successfully purchased 4, ticket for the activity : Football.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+a
+Activity name : Bowling, Total number of ticket available = 1
 Activity name : Cycling, Total number of ticket available = 10
-Activity name : Football, Total number of ticket available = 20
-Activity name : Hiking, Total number of ticket available = 2
-Activity name : Sailing, Total number of ticket available = 1
-Activity name : Table Tennis, Total number of ticket available = 4
--------------------------------------------------------------------------------------------
-Hi Michael Smith you have Successfully purchase 1, ticket for the activity : Sailing.
--------------------------------------------------------------------------------------------
-Activity name : Bowling, Total number of ticket available = 6
-Activity name : Cycling, Total number of ticket available = 10
-Activity name : Football, Total number of ticket available = 20
-Activity name : Hiking, Total number of ticket available = 2
+Activity name : Football, Total number of ticket available = 18
+Activity name : Hiking, Total number of ticket available = 3
 Activity name : Sailing, Total number of ticket available = 0
 Activity name : Table Tennis, Total number of ticket available = 4
 -------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
 -------------------------------------------------------------------------------------------
+Type a letter and press Enter
+c
 Ted Jones, You have been registered for 3, activities.
+Ticket bought for activity, Sailing is 2.
 Ticket bought for activity, Hiking is 1.
-Ticket bought for activity, Sailing is 1.
 Ticket bought for activity, Bowling is 2.
 
 Anna Smith, You have been registered for 2, activities.
-Ticket bought for activity, Hiking is 1.
 Ticket bought for activity, Sailing is 1.
+Ticket bought for activity, Bowling is 5.
 
-Michael Smith, You have been registered for 2, activities.
-Ticket bought for activity, Football is 2.
-Ticket bought for activity, Sailing is 1.
+Michael Smith, You have been registered for 1, activities.
+Ticket bought for activity, Football is 4.
 
 -------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+t
+Enter person’s first name and last name, and then press Enter
+michael smith
+Enter Activity name.
+football
+Enter Number of ticket customer want to buy/cancel.
+0
+Your input seems to be incorrect, Please try entering a valid ticket number you want buy.
+-------------------------------------------------------------------------------------------
+MENU
+f - to finish running the program.
+a - to display on the screen information about all the activities.
+c - to display on the screen information about all the customers
+t - to update the stored data when tickets are bought by one of the registered customers.
+r - to update the stored data when a registered customer cancels tickets for a booking.
+-------------------------------------------------------------------------------------------
+Type a letter and press Enter
+f
+
+Process finished with exit code 0

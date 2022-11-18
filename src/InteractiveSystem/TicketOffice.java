@@ -6,7 +6,6 @@ import java.util.Scanner;
 @SuppressWarnings("FieldMayBeFinal")
 public class TicketOffice {
 
-    final String DIVIDER = "-------------------------------------------------------------------------------------------";
     final int NUMBER_OF_ALLOWED_REGISTRATION = 3;
 
     private SortedArrayList<Customer> customersSortedArrayList;
@@ -21,26 +20,20 @@ public class TicketOffice {
     }
 
     /**
-     * @param clerk to print the customer input/output details in the clerk.txt file
+     * to print the activity details.
      */
-    void printActivityDetails(PrintWriter clerk) {
-        clerk.println(DIVIDER);
-        activitySortedArrayList.forEach(activity -> activity.printDetails(clerk));
-        clerk.println(DIVIDER);
+    void printActivityDetails() {
+        activitySortedArrayList.forEach(activity -> activity.printActivityDetails());
     }
 
     /**
-     * @param clerk to print the customer input/output details in the clerk.txt file
+     * print the customer details.
      */
-    void printCustomerDetails(PrintWriter clerk) {
-        clerk.println(DIVIDER);
-        customersSortedArrayList.forEach(customer -> customer.printDetails(clerk));
-        clerk.println(DIVIDER);
+    void printCustomerDetails() {
+        customersSortedArrayList.forEach(customer -> customer.printCustomerDetails());
     }
 
     /**
-     * @param clerk    to print the customer input/output details in the clerk.txt
-     *                 file
      * @param letters  to print the customer letter in the letters.txt file
      * @param isBuying boolean flag indicating whether the customer is buying the
      *                 ticket or canceling the ticket
@@ -66,7 +59,6 @@ public class TicketOffice {
      */
     boolean buyAndCancelTicket(
             Scanner k,
-            PrintWriter clerk,
             PrintWriter letters,
             boolean isBuying) {
         Customer customer = readCustomerNames(k);
@@ -82,8 +74,6 @@ public class TicketOffice {
         if (noOfTicketToBuyOrCancel <= 0) {
             System.out.println(
                     "Your input seems to be incorrect, Please try entering a valid ticket number you want buy.");
-            clerk.println(
-                    "Your input seems to be incorrect, Please try entering a valid ticket number you want buy.");
             return false;
         }
 
@@ -95,22 +85,12 @@ public class TicketOffice {
                             " " +
                             customer.getLastName() +
                             ", Sorry, But we cannot find you as a registered customer.");
-            clerk.println(
-                    "Hi " +
-                            customer.getFirstName() +
-                            " " +
-                            customer.getLastName() +
-                            ", Sorry, But we cannot find you as a registered customer.");
             return false;
         }
 
         // check if Activity is available
         if (existingActivity == null) {
             System.out.println(
-                    "The provided activity : " +
-                            activity.getActivityName() +
-                            " doesn't exist, Please try entering the correct activity detail.");
-            clerk.println(
                     "The provided activity : " +
                             activity.getActivityName() +
                             " doesn't exist, Please try entering the correct activity detail.");
@@ -128,9 +108,6 @@ public class TicketOffice {
                         "There is no more ticket available for the activity " +
                                 existingActivity.getActivityName() +
                                 ", Please try for another activity.");
-                clerk.println("There is no more ticket available for the activity " +
-                        existingActivity.getActivityName() +
-                        ", Please try for another activity. ");
                 printLetter(letters, existingCustomer, existingActivity);
                 return false;
             }
@@ -152,16 +129,6 @@ public class TicketOffice {
                                 " for the same activity : " +
                                 existingActivity.getActivityName() +
                                 ".");
-                clerk.println(
-                        "Hi " +
-                                existingCustomer.getFirstName() +
-                                " " +
-                                existingCustomer.getLastName() +
-                                " you have Successfully purchased the another ticket, the total no.of ticket " +
-                                existingCustomer.getNoOfTicketForActivity().get(existingActivity) +
-                                " for the same activity : " +
-                                existingActivity.getActivityName() +
-                                ".");
                 return true;
             }
 
@@ -173,27 +140,11 @@ public class TicketOffice {
                                 " " +
                                 existingCustomer.getLastName() +
                                 " you have been already registered for max no. of  activity.");
-                clerk.println(
-                        "Hi " +
-                                existingCustomer.getFirstName() +
-                                " " +
-                                existingCustomer.getLastName() +
-                                " you have been already registered for max no. of  activity.");
                 return false;
             }
 
             if (buyTicket(existingCustomer, existingActivity, noOfTicketToBuyOrCancel)) {
                 System.out.println(
-                        "Hi " +
-                                existingCustomer.getFirstName() +
-                                " " +
-                                existingCustomer.getLastName() +
-                                " you have Successfully purchased " +
-                                noOfTicketToBuyOrCancel +
-                                ", ticket for the activity : " +
-                                existingActivity.getActivityName() +
-                                ".");
-                clerk.println(
                         "Hi " +
                                 existingCustomer.getFirstName() +
                                 " " +
@@ -215,10 +166,6 @@ public class TicketOffice {
                         "There is no ticket found for the activity " +
                                 existingActivity.getActivityName() +
                                 ", Please try to cancel the ticket for another activity.");
-                clerk.println(
-                        "There is no ticket found for the activity " +
-                                existingActivity.getActivityName() +
-                                ", Please try to cancel the ticket for another activity.");
                 return false;
             }
 
@@ -227,16 +174,6 @@ public class TicketOffice {
                     existingActivity,
                     noOfTicketToBuyOrCancel)) {
                 System.out.println(
-                        "Hi " +
-                                existingCustomer.getFirstName() +
-                                " " +
-                                existingCustomer.getLastName() +
-                                " you have Successfully canceled  " +
-                                noOfTicketToBuyOrCancel +
-                                ", ticket for the activity " +
-                                existingActivity.getActivityName() +
-                                ".");
-                clerk.println(
                         "Hi " +
                                 existingCustomer.getFirstName() +
                                 " " +

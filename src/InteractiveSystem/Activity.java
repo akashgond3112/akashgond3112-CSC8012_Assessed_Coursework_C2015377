@@ -42,8 +42,7 @@ public class Activity implements Comparable<Activity> {
         return activityName.compareTo(activity.activityName);
     }
 
-    public void printDetails(PrintWriter f) {
-        f.println("Activity name : "+activityName +", Total number of ticket available = "+totalNumberOfTicketAvailablePerActivity);
+    public void printActivityDetails() {
         System.out.println("Activity name : "+activityName +", Total number of ticket available = "+totalNumberOfTicketAvailablePerActivity);
     }
 
